@@ -10,12 +10,12 @@ function Piece(scene, id, x, y) {
 	if (xor(this.x % 2 == 0, this.y % 2 == 0)) {
 		this.appearance.setAmbient(0.1, 0.1, 0.1, 1.0);
 		this.appearance.setDiffuse(0.1, 0.1, 0.1, 1.0);
-		this.player = 2;
+		this.player = 1;
 	}
 	else {
 		this.appearance.setAmbient(1.0, 1.0, 1.0, 1.0);
 		this.appearance.setDiffuse(1.0, 1.0, 1.0, 1.0);
-		this.player = 1;
+		this.player = 2;
 	}
 }
 

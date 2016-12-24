@@ -55,8 +55,16 @@ GameState.prototype.processPick = function(picked_obj) {
 		if (picked_obj.player == this.current_player) {
 			this.selected_piece = picked_obj;
 			var request_string = this.createRequestString('100', board, coord, this.current_player);
-			var request = makeRequest(request_string);
-			console.log(request.response);
+			var jump_moves = makeRequest(request_string);
+			console.log(jump_moves.response);
+
+			request_string = this.createRequestString('200', board, coord, this.current_player);
+			var adjoin_moves = makeRequest(request_string);
+			console.log(adjoin_moves.response);
+
+			request_string = this.createRequestString('300', board, coord, this.current_player);
+			var center_moves = makeRequest(request_string);
+			console.log(center_moves.response);
 		}
 
 		// Player picks opponents piece -> jump

@@ -7,7 +7,7 @@ function makeRequest(request_string)
 
 function getPrologRequest(requestString, onSuccess, onError, port)
 {
-	var requestPort = port || 8081
+	var requestPort = port || 8083
 	var request = new XMLHttpRequest();
 	request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, false);
 

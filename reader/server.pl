@@ -12,7 +12,7 @@
 
 % Made by Luis Reis (ei12085@fe.up.pt) for LAIG course at FEUP.
 
-port(8081).
+port(8083).
 
 % Server Entry Point
 server :-
@@ -105,7 +105,8 @@ print_header_line(_).
 
 % Require your Prolog Files here
 
-:- ensure_loaded('rules.pl').
+:- ensure_loaded('src/rules.pl').
+:- ensure_loaded('src/utilities.pl').
 
 % RequestString processing
 parse_input(Request, Response) :-
@@ -158,13 +159,23 @@ getBoard(B, RequestBoard, N) :-
 	getBoard(Tmp, NewB, N1),
 	append([Line], NewB, RequestBoard).
 
-% Piece Selection
-processRequest(100, RequestBoard, RequestColumn, RequestLine, RequestPlayer, Response) :-
-	Response="OK".
-	
+% Return available moves according to rules
+processRequest(100, Board, Column, Line, Player, Response) :-
+	get_jump_positions(Player, Board, Column, Line, Response),
+	Response \= [].
+processRequest(100, Board, Column, Line, Player, []).
 
+processRequest(200, Board, Column, Line, Player, Response) :-
+	get_adjoin_positions(Player, Board, Column, Line, Response),
+	Response \= [].
+processRequest(200, Board, Column, Line, Player, []).
 
-% Create board list
+processRequest(300, Board, Column, Line, Player, Response) :-
+	get_center_positions(Player, Board, Column, Line, Response),
+	Response \= [].
+processRequest(300, Board, Column, Line, Player, []).
+
+processRequest(_, _, _, _, _, []).
 
 
 
