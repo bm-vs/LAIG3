@@ -43,12 +43,6 @@ main=function()
 
 	app.init();
 	
-	// Set canvas size to be the same as its parents size
-	var canvas = document.getElementsByTagName("canvas");
-	var parent = document.getElementById("game");
-	canvas[0].width = parent.offsetWidth;
-	canvas[0].height = parent.offsetHeight;
-
 	app.setScene(gameScene);
 	app.setInterface(gameInterface);
 

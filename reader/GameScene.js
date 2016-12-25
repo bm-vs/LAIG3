@@ -29,12 +29,12 @@ GameScene.prototype.init = function (application) {
 
 GameScene.prototype.initCameras = function () {
 	this.cameras = [];
-	this.cameras[0] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 34, 0.1), vec3.fromValues(0, 0, 0));
-	this.cameras[1] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 30, 15), vec3.fromValues(0, 0, 0));
-	this.cameras[2] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 30, 0), vec3.fromValues(0, 0, 0));
-	this.cameras[3] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 30, -15), vec3.fromValues(0, 0, 0));
-	this.cameras[4] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(-15, 30, 0), vec3.fromValues(0, 0, 0));
-	this.cameras[5] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 30, 15), vec3.fromValues(0, 0, 0));
+	this.cameras[0] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 40, 0.1), vec3.fromValues(0, 0, 0));
+	this.cameras[1] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 30, 30), vec3.fromValues(0, 0, 0));
+	this.cameras[2] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 30, 0), vec3.fromValues(0, 0, 0));
+	this.cameras[3] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 30, -30), vec3.fromValues(0, 0, 0));
+	this.cameras[4] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(-30, 30, 0), vec3.fromValues(0, 0, 0));
+	this.cameras[5] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 30, 30), vec3.fromValues(0, 0, 0));
 	this.camera = this.cameras[0];
 	//this.interface.setActiveCamera(this.camera);
 
