@@ -22,8 +22,22 @@ function Board(scene) {
 	var id = 0;
 	for (var line = 0; line < 10; line++) {
 		for (column = 0; column < 10; column++) {
-			this.tiles[id] = new Tile(scene, id+1, column*0.1, line*0.1, false);
+			this.tiles[id] = new Tile(scene, id+101, column, line, false);
 			id++;
+		}
+	}
+}
+
+Board.prototype.deSelectAllTiles = function() {
+	for (var i = 0; i < this.tiles.length; i++) {
+		this.tiles[i].selected = false;
+	}
+}
+
+Board.prototype.setSelectedTiles = function(tiles) {
+	for (var i = 0; i < this.tiles.length; i++) {
+		if (tiles.indexOf(this.tiles[i].id - 101) >= 0) {
+			this.tiles[i].selected = true;
 		}
 	}
 }
