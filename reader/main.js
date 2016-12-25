@@ -17,6 +17,7 @@ serialInclude([
 	'GameInterface.js',
 	'GameState.js',
 	'GameMove.js',
+	'Animation.js',
 	'Board.js',
 	'Piece.js',
 	'Tile.js',
