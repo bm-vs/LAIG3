@@ -113,30 +113,7 @@ GameState.prototype.processPick = function(picked_obj) {
 			this.board.deSelectAllTiles();
 			var game_move = new GameMove(this, picked_obj, true);
 			this.previous_moves.push(game_move);
-			
-			// After jump check if more jumps for the selected piece are available
-			var newBoard = this.piece_positions;
-			var newCoord = [this.selected_piece.x, this.selected_piece.y];
-			if (this.selected_piece.x < 10 && this.selected_piece.x >= 0 && this.selected_piece.y < 10 && this.selected_piece.y >= 0) {
-				var request_string = this.createRequestString('100', newBoard, newCoord, this.current_player);
-				var jump_moves = makeRequest(request_string);
-				var process_jump_moves = processString(jump_moves.response);
-				if (process_jump_moves.length == 0) {
-					this.jumping = false;
-					this.nextPlayer();
-				}
-				else {
-					this.jump_moves = process_jump_moves;
-					this.center_moves = [];
-					this.adjoin_moves = [];
-					this.jumping = true;
-					this.board.setSelectedTiles(this.jump_moves);
-				}
-			}
-			else {
-				this.jumping = false;
-				this.nextPlayer();
-			}
+			this.jumping = true;
 		}
 	}
 }
@@ -186,6 +163,33 @@ GameState.prototype.update = function() {
 	for (var i = 0; i < this.previous_moves.length; i++) {
 		if (this.previous_moves[i].animated) {
 			this.previous_moves[i].update();
+			
+			if (!this.previous_moves[i].animated && this.jumping) {
+				// After jump check if more jumps for the selected piece are available
+				var newBoard = this.piece_positions;
+				var newCoord = [this.selected_piece.x, this.selected_piece.y];
+				if (this.selected_piece.x < 10 && this.selected_piece.x >= 0 && this.selected_piece.y < 10 && this.selected_piece.y >= 0) {
+					var request_string = this.createRequestString('100', newBoard, newCoord, this.current_player);
+					var jump_moves = makeRequest(request_string);
+					var process_jump_moves = processString(jump_moves.response);
+					if (process_jump_moves.length == 0) {
+						this.jumping = false;
+						this.nextPlayer();
+					}
+					else {
+						this.jump_moves = process_jump_moves;
+						this.center_moves = [];
+						this.adjoin_moves = [];
+						this.jumping = true;
+						this.board.setSelectedTiles(this.jump_moves);
+					}
+				}
+				else {
+					this.jumping = false;
+					this.nextPlayer();
+				}
+			}
+			
 		}
 	}
 }

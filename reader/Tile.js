@@ -29,7 +29,7 @@ Tile.prototype.display = function() {
 		else {
 			this.app_normal.apply();
 		}
-		this.scene.translate(this.x/10, this.y/10, 0.005);
+		this.scene.translate(this.x/10, this.y/10, 0.001);
 		this.scene.registerForPick(this.id, this);
 		this.tile.display();
 	this.scene.popMatrix();

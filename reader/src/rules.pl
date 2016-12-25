@@ -17,7 +17,7 @@ restriction1(Player, Board, Column, Line) :-
 	Piece3 \= Player.
 
 restriction1(Player, Board, Column, Line, NewColumn, NewLine) :-
-	Right is NewColumn+1, Left is NewColumn-1, Top is NewLine-1, Bottom is NewLine-1,
+	Right is NewColumn+1, Left is NewColumn-1, Top is NewLine-1, Bottom is NewLine+1,
 	get_piece(Board, Top, NewColumn, Piece0) , !,
 	((Column == NewColumn, Line == Top) -> (Piece0 == Player); (Piece0 \= Player)),
 	get_piece(Board, Bottom, NewColumn, Piece1), !,

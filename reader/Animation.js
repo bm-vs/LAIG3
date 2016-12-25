@@ -52,8 +52,16 @@ AnimationPiece.prototype.update = function() {
 		this.piece.x = this.to_x;
 		this.piece.y = this.to_y;
 		this.piece.z = 0;
-		this.move.game_state.piece_positions[this.to_y][this.to_x] = this.n;
-		this.move.game_state.selected_piece.id = this.to_y*10+this.to_x + 1;
+		if (this.to_x < 10 && this.to_x >= 0 && this.to_y < 10 && this.to_y >= 0) {
+			this.move.game_state.piece_positions[this.to_y][this.to_x] = this.n;
+			this.move.game_state.selected_piece.id = this.to_y*10+this.to_x + 1;
+		}
+		else {
+			// Remove jump piece if it goes out of the board
+			this.move.game_state.selected_piece.id = -1;
+			this.move.game_state.selected_piece.x = 11;
+			this.move.game_state.selected_piece.y = 4;
+		}
 	}
 	else {
 		var dx = (this.to_x - this.from_x)/this.duration * this.curr_time;

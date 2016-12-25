@@ -26,33 +26,17 @@ GameMove.prototype.processMove = function() {
 
 
 GameMove.prototype.processJumpMove = function(destination) {
-	// Change board state
-	var n = this.game_state.piece_positions[this.from_y][this.from_x];
-	this.game_state.piece_positions[this.from_y][this.from_x] = 0;
-	this.game_state.piece_positions[this.to_y][this.to_x] = 0;
-	
-	// Move selected piece to space after jumped piece
+	this.animated = true;
 	this.jumped_to_x = this.game_state.selected_piece.x + 2*(this.to_x - this.from_x);
 	this.jumped_to_y = this.game_state.selected_piece.y + 2*(this.to_y - this.from_y);
-	
-	this.game_state.selected_piece.x = this.jumped_to_x;
-	this.game_state.selected_piece.y = this.jumped_to_y;
-	
-	if (this.jumped_to_x < 10 && this.jumped_to_x >= 0 && this.jumped_to_y < 10 && this.jumped_to_y >= 0) {
-		this.game_state.piece_positions[this.jumped_to_y][this.jumped_to_x] = n;
-		this.game_state.selected_piece.id = this.jumped_to_y*10+this.jumped_to_x + 1;
-	}
-	else {
-		// Remove jump piece if it goes out of the board
-		this.game_state.selected_piece.id = -1;
-		this.game_state.selected_piece.x = 11;
-		this.game_state.selected_piece.y = 4;
-	}
+	this.animation = new AnimationPiece(this.game_state.scene, this, this.game_state.selected_piece, this.from_x, this.from_y, this.jumped_to_x, this.jumped_to_y);
 	
 	// Remove jumped piece
+	this.game_state.piece_positions[this.to_y][this.to_x] = 0;
 	this.destination.id = -1;
 	this.destination.x = 11;
 	this.destination.y = 5;
+	
 }
 
 GameMove.prototype.update = function() {
