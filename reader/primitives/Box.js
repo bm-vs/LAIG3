@@ -10,7 +10,7 @@ function Box(scene) {
 
 Box.prototype.display= function() {
 	this.scene.pushMatrix();
-		this.scene.translate(0, 0, -0.0075);
+		this.scene.translate(0, 0, -this.base_z);
 		this.scene.scale(this.base_width, 1, this.base_height);
 		this.base.display();
 	this.scene.popMatrix();

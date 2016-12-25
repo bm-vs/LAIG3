@@ -33,6 +33,7 @@ function GameState(scene) {
 	this.current_player = 1;
 	this.selected_piece = null;
 	this.jumping = false;
+	this.animated = false;
 	this.jump_moves = [];
 	this.adjoin_moves = [];
 	this.center_moves = [];
@@ -87,7 +88,7 @@ GameState.prototype.processPick = function(picked_obj) {
 	}
 	
 	// If picked object belongs to player change selected piece to that
-	if (picked_obj.player == this.current_player && !this.jumping) {
+	if (picked_obj.player == this.current_player && !this.jumping && !this.animated) {
 		this.board.deSelectAllTiles();
 		this.selected_piece = picked_obj;
 		var request_string = this.createRequestString('100', board, coord, this.current_player);
@@ -105,7 +106,7 @@ GameState.prototype.processPick = function(picked_obj) {
 		this.board.setSelectedTiles(this.jump_moves.concat(this.adjoin_moves, this.center_moves));
 	}
 	// If picked object is not the players
-	else if (this.selected_piece != null) {
+	else if (this.selected_piece != null && !this.animated) {
 		var id;
 	
 		if (picked_obj instanceof Tile) {
@@ -178,8 +179,11 @@ GameState.prototype.nextPlayer = function() {
 }
 
 GameState.prototype.update = function() {
+	this.animated = false;
+
 	for (var i = 0; i < this.previous_moves.length; i++) {
 		if (this.previous_moves[i].animated) {
+			this.animated = true;
 			this.previous_moves[i].update();
 			
 			if (!this.previous_moves[i].animated && this.jumping) {
