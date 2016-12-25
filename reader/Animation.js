@@ -54,13 +54,12 @@ AnimationPiece.prototype.update = function() {
 		this.piece.z = 0;
 		if (this.to_x < 10 && this.to_x >= 0 && this.to_y < 10 && this.to_y >= 0) {
 			this.move.game_state.piece_positions[this.to_y][this.to_x] = this.n;
-			this.move.game_state.selected_piece.id = this.to_y*10+this.to_x + 1;
+			this.piece.id = this.to_y*10+this.to_x + 1;
 		}
 		else {
 			// Remove jump piece if it goes out of the board
-			this.move.game_state.selected_piece.id = -1;
-			this.move.game_state.selected_piece.x = 11;
-			this.move.game_state.selected_piece.y = 4;
+			this.move.animated = true;
+			this.move.animation = new AnimationRemove(this.scene, this.move, this.piece, this.to_x, this.to_y); 
 		}
 	}
 	else {
@@ -74,11 +73,52 @@ AnimationPiece.prototype.update = function() {
 	}
 }
 
+function AnimationRemove(scene, move, piece, from_x, from_y) {
+	this.scene = scene;
+	this.move = move;
+	this.piece = piece;
+	this.from_x = from_x;
+	this.from_y = from_y;
+	this.duration = 0.2;
+	this.curr_time = 0;
+	this.move.game_state.selected_piece.id = -1;
+	if (this.piece.player == 1) {
+		this.to_x = 11.5;
+		this.to_y = this.move.game_state.auxiliar_board1.current_y;
+		this.move.game_state.auxiliar_board1.addPiece();
+	}
+	else if (this.piece.player == 2) {
+		this.to_x = -2.5;
+		this.to_y = this.move.game_state.auxiliar_board2.current_y;
+		this.move.game_state.auxiliar_board2.addPiece();
+	}
+	this.length = Math.sqrt(Math.pow(this.to_x-this.from_x, 2) + Math.pow(this.to_y-this.from_y, 2)); 
+}
 
+AnimationRemove.prototype.update = function() {
+	this.curr_time += this.scene.updatePeriod/1000;
+	console.log(this.piece.x, this.piece.y, this.piece.z);
 
+	if (this.curr_time >= this.duration) {
+		this.move.animated = false;
+		this.move.animation = null;
+		this.piece.x = this.to_x;
+		this.piece.y = this.to_y;
+	}
+	else {
+		var dx = (this.to_x - this.from_x)/this.duration * this.curr_time;
+		var dy = (this.to_y - this.from_y)/this.duration * this.curr_time;
+		var dang = Math.PI/2/this.duration * this.curr_time;
+		var d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) - this.length/2;
+	
+		this.piece.x = this.from_x + dx;
+		this.piece.y = this.from_y + dy;
+		this.piece.z = Math.sqrt((1-Math.pow(2*d/this.length,2))/4);
+		this.piece.ang = dang;
+	}
+}
 
-
-
+			
 
 
 

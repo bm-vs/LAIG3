@@ -4,6 +4,7 @@ function Piece(scene, id, x, y) {
 	this.x = x;
 	this.y = y;
 	this.z = 0;
+	this.ang = 0;
 	this.piece = new Cylinder(scene, 0.42, 0.42, 32, 8, 0.17);
 	this.appearance = new CGFappearance(scene);
 
@@ -24,6 +25,7 @@ Piece.prototype.display = function() {
 	this.scene.pushMatrix();
 		this.appearance.apply();
 		this.scene.translate(this.x, this.y, 0.4+this.z);
+		this.scene.rotate(this.ang, 1, 0, 0);
 		this.scene.registerForPick(this.id, this);
 		this.piece.display();
 	this.scene.popMatrix();
