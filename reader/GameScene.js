@@ -102,4 +102,6 @@ GameScene.prototype.update = function() {
 	if (this.changing_camera && this.camera_animation != null) {
 		this.camera_animation.update();
 	}
+	
+	this.gameState.update();
 }

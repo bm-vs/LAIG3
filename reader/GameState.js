@@ -181,3 +181,11 @@ GameState.prototype.nextPlayer = function() {
 	this.center_moves = [];
 	this.adjoin_moves = [];
 }
+
+GameState.prototype.update = function() {
+	for (var i = 0; i < this.previous_moves.length; i++) {
+		if (this.previous_moves[i].animated) {
+			this.previous_moves[i].update();
+		}
+	}
+}

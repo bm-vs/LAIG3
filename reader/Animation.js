@@ -26,3 +26,62 @@ AnimationCamera.prototype.update = function() {
 		this.scene.camera = new CGFcamera(this.start_camera.fov, this.start_camera.near, this.start_camera.far, vec3.fromValues(x, y, z), this.start_camera.target);
 	}
 }
+
+
+function AnimationPiece(scene, move, piece, from_x, from_y, to_x, to_y) {
+	this.scene = scene;
+	this.move = move;
+	this.duration = 0.2;
+	this.curr_time = 0;
+	this.piece = piece;
+	this.from_x = from_x;
+	this.from_y = from_y;
+	this.to_x = to_x;
+	this.to_y = to_y;
+	this.n = this.move.game_state.piece_positions[this.from_y][this.from_x];
+	this.move.game_state.piece_positions[this.from_y][this.from_x] = 0;
+	this.length = Math.sqrt(Math.pow(to_x-from_x, 2) + Math.pow(to_y-from_y, 2)); 
+}
+
+AnimationPiece.prototype.update = function() {
+	this.curr_time += this.scene.updatePeriod/1000;
+
+	if (this.curr_time >= this.duration) {
+		this.move.animated = false;
+		this.move.animation = null;
+		this.piece.x = this.to_x;
+		this.piece.y = this.to_y;
+		this.piece.z = 0;
+		this.move.game_state.piece_positions[this.to_y][this.to_x] = this.n;
+		this.move.game_state.selected_piece.id = this.to_y*10+this.to_x + 1;
+	}
+	else {
+		var dx = (this.to_x - this.from_x)/this.duration * this.curr_time;
+		var dy = (this.to_y - this.from_y)/this.duration * this.curr_time;
+		var d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) - this.length/2;
+	
+		this.piece.x = this.from_x + dx;
+		this.piece.y = this.from_y + dy;
+		this.piece.z = Math.sqrt((1-Math.pow(2*d/this.length,2))/4);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
