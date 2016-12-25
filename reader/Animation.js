@@ -14,7 +14,7 @@ AnimationCamera.prototype.update = function() {
 	if (this.curr_time >= this.duration) {
 		this.scene.active_camera = this.next_camera;
 		this.scene.camera = this.scene.cameras[this.scene.active_camera];
-		this.scene.interface.setActiveCamera(this.scene.camera);
+		//this.scene.interface.setActiveCamera(this.scene.camera);
 		this.scene.changing_camera = false;
 		this.scene.camera_animation = null;
 	}

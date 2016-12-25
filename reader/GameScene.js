@@ -36,7 +36,7 @@ GameScene.prototype.initCameras = function () {
 	this.cameras[4] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(-15, 25, 0), vec3.fromValues(0, 0, 0));
 	this.cameras[5] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 25, 15), vec3.fromValues(0, 0, 0));
 	this.camera = this.cameras[0];
-	this.interface.setActiveCamera(this.camera);
+	//this.interface.setActiveCamera(this.camera);
 
 	this.active_camera = 0;
 	this.changing_camera = false;
@@ -59,7 +59,7 @@ GameScene.prototype.setDefaultAppearance = function () {
 };
 
 GameScene.prototype.logPicking = function () {
-	if (this.pickMode == false) {
+	if (this.pickMode == false && !this.changing_camera) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
 			for (var i=0; i< this.pickResults.length; i++) {
 				var obj = this.pickResults[i][0];
