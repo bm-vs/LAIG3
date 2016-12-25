@@ -33,6 +33,9 @@ function GameState(scene) {
 	this.jump_moves = [];
 	this.adjoin_moves = [];
 	this.center_moves = [];
+	
+	// Previous moves
+	this.previous_moves = [];
 }
 
 GameState.prototype.display = function() {
@@ -56,9 +59,7 @@ GameState.prototype.display = function() {
 GameState.prototype.processPick = function(picked_obj) {
 	var board = this.piece_positions;
 	var coord = [picked_obj.x, picked_obj.y];
-	
-	//console.log("Coord ", picked_obj.x, picked_obj.y);
-	
+		
 	// Map picked tile to piece on top if exists
 	if (picked_obj instanceof Tile) {
 		var piece = this.checkIfExistsPiece(picked_obj.x, picked_obj.y);
@@ -82,7 +83,6 @@ GameState.prototype.processPick = function(picked_obj) {
 		request_string = this.createRequestString('300', board, coord, this.current_player);
 		var center_moves = makeRequest(request_string);
 		this.center_moves = processString(center_moves.response);
-		//console.log(this.jump_moves, this.adjoin_moves, this.center_moves);
 		
 		this.board.setSelectedTiles(this.jump_moves.concat(this.adjoin_moves, this.center_moves));
 	}
@@ -97,16 +97,22 @@ GameState.prototype.processPick = function(picked_obj) {
 			id = picked_obj.id - 1;
 		}
 		
-		//console.log(id);
-		
 		if (this.adjoin_moves.indexOf(id) >= 0) {
-			this.processOtherMoves(picked_obj);
+			this.board.deSelectAllTiles();
+			var game_move = new GameMove(this, picked_obj, false);
+			this.previous_moves.push(game_move);
+			this.nextPlayer();
 		}
 		else if (this.center_moves.indexOf(id) >= 0) {
-			this.processOtherMoves(picked_obj);
+			this.board.deSelectAllTiles();
+			var game_move = new GameMove(this, picked_obj, false);
+			this.previous_moves.push(game_move);
+			this.nextPlayer();
 		}
 		else if (this.jump_moves.indexOf(id) >= 0) {
-			this.processJumpMove(picked_obj);
+			this.board.deSelectAllTiles();
+			var game_move = new GameMove(this, picked_obj, true);
+			this.previous_moves.push(game_move);
 			
 			// After jump check if more jumps for the selected piece are available
 			var newBoard = this.piece_positions;
@@ -133,8 +139,6 @@ GameState.prototype.processPick = function(picked_obj) {
 			}
 		}
 	}
-	
-	//console.log(this.jump_moves, this.adjoin_moves, this.center_moves);
 }
 
 GameState.prototype.createRequestString = function(request_number, board, coord, current_player) {
@@ -170,52 +174,10 @@ GameState.prototype.checkIfExistsPiece = function(x, y) {
 	return null;
 }
 
-
-GameState.prototype.processJumpMove = function(destination) {
-	this.board.deSelectAllTiles();
-
-	// Change board state
-	var n = this.piece_positions[this.selected_piece.y][this.selected_piece.x];
-	this.piece_positions[this.selected_piece.y][this.selected_piece.x] = 0;
-	this.piece_positions[destination.y][destination.x] = 0;
-	
-	// Move selected piece to space after jumped piece
-	this.selected_piece.x += 2*(destination.x - this.selected_piece.x);
-	this.selected_piece.y += 2*(destination.y - this.selected_piece.y);
-	
-	if (this.selected_piece.x < 10 && this.selected_piece.x >= 0 && this.selected_piece.y < 10 && this.selected_piece.y >= 0) {
-		this.piece_positions[this.selected_piece.y][this.selected_piece.x] = n;
-		this.selected_piece.id = this.selected_piece.y*10+this.selected_piece.x + 1;
-		//console.log(this.selected_piece.id);
-	}
-	else {
-		// Remove jump piece if it goes out of the board
-		this.selected_piece.id = -1;
-		this.selected_piece.x = 11;
-		this.selected_piece.y = 4;
-	}
-	
-	// Remove jumped piece
-	destination.id = -1;
-	destination.x = 11;
-	destination.y = 5;
-}
-
-GameState.prototype.processOtherMoves = function(destination) {
-	this.board.deSelectAllTiles();
-
-	var n = this.piece_positions[this.selected_piece.y][this.selected_piece.x];
-	this.piece_positions[this.selected_piece.y][this.selected_piece.x] = 0;
-	this.selected_piece.x = destination.x;
-	this.selected_piece.y = destination.y;
-	this.piece_positions[this.selected_piece.y][this.selected_piece.x] = n;
-	this.selected_piece.id = this.selected_piece.y*10+this.selected_piece.x + 1;
-	//console.log(this.selected_piece.id);
-	
-	this.nextPlayer();
-}
-
 // Change active player
 GameState.prototype.nextPlayer = function() {
 	this.current_player = 1 + (this.current_player % 2);
+	this.jump_moves = [];
+	this.center_moves = [];
+	this.adjoin_moves = [];
 }

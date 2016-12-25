@@ -16,6 +16,7 @@ serialInclude([
 	'GameScene.js',
 	'GameInterface.js',
 	'GameState.js',
+	'GameMove.js',
 	'Board.js',
 	'Piece.js',
 	'Tile.js',
@@ -28,13 +29,20 @@ main=function()
 {
 	
 	// Standard application, scene and interface setup
-	var app = new CGFapplication(document.body);
+	var app = new CGFapplication(document.getElementById("game"));
+	
 	var gameScene = new GameScene();
 	var gameInterface = new GameInterface();
 
 	gameScene.interface = gameInterface;
 
 	app.init();
+	
+	// Set canvas size to be the same as its parents size
+	var canvas = document.getElementsByTagName("canvas");
+	var parent = document.getElementById("game");
+	canvas[0].width = parent.offsetWidth;
+	canvas[0].height = parent.offsetHeight;
 
 	app.setScene(gameScene);
 	app.setInterface(gameInterface);
