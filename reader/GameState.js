@@ -3,6 +3,9 @@ function GameState(scene) {
 	
 	// Primitives
 	this.board = new Board(scene);
+	this.auxiliar_board1 = new AuxiliarBoard(scene, 1);
+	this.auxiliar_board2 = new AuxiliarBoard(scene, 2);
+	
 	var id = 0;
 	this.pieces = [];
 	for (var line = 0; line < 10; line++) {
@@ -39,6 +42,20 @@ function GameState(scene) {
 }
 
 GameState.prototype.display = function() {
+	this.scene.pushMatrix();
+		this.scene.translate(-7,0,0);
+		this.scene.rotate(-Math.PI/2, 1, 0, 0);
+		this.scene.scale(10,10,10);
+		this.auxiliar_board1.display();
+	this.scene.popMatrix();
+	
+	this.scene.pushMatrix();
+		this.scene.translate(7,0,0);
+		this.scene.rotate(-Math.PI/2, 1, 0, 0);
+		this.scene.scale(10,10,10);
+		this.auxiliar_board2.display();
+	this.scene.popMatrix();
+
 	this.scene.pushMatrix();
 		this.scene.rotate(-Math.PI/2, 1, 0, 0);
 		this.scene.scale(10,10,10);

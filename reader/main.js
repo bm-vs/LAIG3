@@ -19,11 +19,15 @@ serialInclude([
 	'GameMove.js',
 	'Animation.js',
 	'Board.js',
+	'AuxiliarBoard.js',
 	'Piece.js',
 	'Tile.js',
 	'Connection.js',
 	'primitives/Plane.js',
 	'primitives/Cylinder.js',
+	'primitives/Box.js',
+	'primitives/Quad.js',
+	'primitives/Cube.js',
 	'Utilities.js',
 
 main=function()
