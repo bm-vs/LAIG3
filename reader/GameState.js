@@ -97,7 +97,11 @@ GameState.prototype.processPick = function(picked_obj) {
 	// Disabled during animations and multiple jump moves
 	if (picked_obj.player == this.current_player && !this.jumping && !this.animated) {
 		this.board.deSelectAllTiles();
+		if (this.selected_piece != null) {
+			this.selected_piece.selected = false;
+		}
 		this.selected_piece = picked_obj;
+		this.selected_piece.selected = true;
 		var request_string = this.createRequestString('100', board, coord, this.current_player);
 		var jump_moves = makeRequest(request_string);
 		this.jump_moves = processString(jump_moves.response);
@@ -215,12 +219,24 @@ GameState.prototype.checkIfExistsPiece = function(x, y) {
 
 // Change active player
 GameState.prototype.nextPlayer = function() {
+	if (this.selected_piece != null) {
+		this.selected_piece.selected = false;
+	}
 	this.current_player = 1 + (this.current_player % 2);
 	this.jump_moves = [];
 	this.center_moves = [];
 	this.adjoin_moves = [];
 	
 	this.turn_time = localStorage.turn_time;
+	
+	if (this.current_player == 1) {
+		document.getElementById('player-black').style.backgroundColor = '#388E3C';
+		document.getElementById('player-white').style.backgroundColor = '#424242';
+	}
+	else if (this.current_player == 2) {
+		document.getElementById('player-white').style.backgroundColor = '#388E3C';
+		document.getElementById('player-black').style.backgroundColor = '#424242';
+	}
 }
 
 // Return number of pieces in piece_positions with piece value 
@@ -279,5 +295,11 @@ GameState.prototype.update = function() {
 				this.checkMultiJump();
 			}
 		}
+	}
+	
+	
+	if (!this.animated && localStorage.undo === 'true') {
+		localStorage.undo = false;
+		console.log(this.previous_moves);
 	}
 }

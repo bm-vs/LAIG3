@@ -12,10 +12,10 @@ function Tile(scene, id, x, y, selected) {
 	this.app_normal.setEmission(0.0, 0.0, 0.0, 0.01);
 	
 	this.app_selected = new CGFappearance(scene);
-	this.app_selected.setAmbient(0.0, 0.3,0.0, 0.01);
-	this.app_selected.setDiffuse(0.0, 0.3, 0.0, 0.01);
-	this.app_selected.setSpecular(0.0, 0.3, 0.0, 0.01);
-	this.app_selected.setEmission(0.0, 0.3, 0.0, 0.01);
+	this.app_selected.setAmbient(0.0, 0.25, 0.0, 0.01);
+	this.app_selected.setDiffuse(0.0, 0.25, 0.0, 0.01);
+	this.app_selected.setSpecular(0.0, 0.25, 0.0, 0.01);
+	this.app_selected.setEmission(0.0, 0.25, 0.0, 0.01);
 }
 
 Tile.prototype.display = function() {
