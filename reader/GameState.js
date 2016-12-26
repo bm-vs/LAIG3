@@ -40,6 +40,12 @@ function GameState(scene) {
 	
 	// Previous moves
 	this.previous_moves = [];
+	
+	// Game time
+	this.game_time = 0;
+	
+	// Turn time
+	this.turn_time = 60;
 }
 
 GameState.prototype.display = function() {
@@ -176,11 +182,56 @@ GameState.prototype.nextPlayer = function() {
 	this.jump_moves = [];
 	this.center_moves = [];
 	this.adjoin_moves = [];
+	
+	this.turn_time = 60;
+}
+
+// Return number of pieces in piece_positions with piece value 
+GameState.prototype.getNumberOfPieces = function(piece) {
+	var count = 0;
+	
+	for (var i = 0; i < this.piece_positions.length; i++) {
+		for (var j = 0; j < this.piece_positions[i].length; j++) {
+			if (this.piece_positions[i][j] == piece) {
+				count++;
+			}
+		}
+	}
+	
+	return count;
+}
+
+// Update number of pieces
+GameState.prototype.updateNumberOfPieces = function() {
+	document.getElementById('player-white-score').innerHTML = this.getNumberOfPieces(2);
+	document.getElementById('player-black-score').innerHTML = this.getNumberOfPieces(1);
 }
 
 GameState.prototype.update = function() {
+	// Update interface
+	
+	// Game time
+	this.game_time += this.scene.updatePeriod/500;
+	var minutes = Math.floor(this.game_time/60);
+	var seconds = Math.floor(this.game_time%60);
+	var formatted_time = "";
+	if (minutes < 10) {
+		formatted_time += "0";
+	}
+	formatted_time += minutes + ":";
+	if (seconds < 10) {
+		formatted_time += "0";
+	}
+	formatted_time += seconds;
+	document.getElementById('game-timer').innerHTML = formatted_time;
+	
+	// Turn time
+	this.turn_time -= this.scene.updatePeriod/500;
+	var turn_seconds = Math.floor(this.turn_time);
+	document.getElementById('turn-time-countdown').innerHTML = turn_seconds;
+	
+	// Do animations
 	this.animated = false;
-
 	for (var i = 0; i < this.previous_moves.length; i++) {
 		if (this.previous_moves[i].animated) {
 			this.animated = true;
@@ -196,6 +247,7 @@ GameState.prototype.update = function() {
 					var process_jump_moves = processString(jump_moves.response);
 					if (process_jump_moves.length == 0) {
 						this.jumping = false;
+						this.updateNumberOfPieces();
 						this.nextPlayer();
 					}
 					else {
@@ -203,11 +255,13 @@ GameState.prototype.update = function() {
 						this.center_moves = [];
 						this.adjoin_moves = [];
 						this.jumping = true;
+						this.updateNumberOfPieces();
 						this.board.setSelectedTiles(this.jump_moves);
 					}
 				}
 				else {
 					this.jumping = false;
+					this.updateNumberOfPieces();
 					this.nextPlayer();
 				}
 			}
