@@ -2,6 +2,7 @@ function GameMove(game_state, destination, jump) {
 	this.game_state = game_state;
 	this.destination = destination;
 
+	this.game_state.selected_piece.selected = false;
 	this.from_x = this.game_state.selected_piece.x;
 	this.from_y = this.game_state.selected_piece.y;
 	this.to_x = destination.x;

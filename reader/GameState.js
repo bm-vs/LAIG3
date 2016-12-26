@@ -167,6 +167,7 @@ GameState.prototype.checkMultiJump = function() {
 			this.nextPlayer();
 		}
 		else {
+			this.selected_piece.selected = true;
 			this.jump_moves = process_jump_moves;
 			this.center_moves = [];
 			this.adjoin_moves = [];
@@ -219,9 +220,6 @@ GameState.prototype.checkIfExistsPiece = function(x, y) {
 
 // Change active player
 GameState.prototype.nextPlayer = function() {
-	if (this.selected_piece != null) {
-		this.selected_piece.selected = false;
-	}
 	this.current_player = 1 + (this.current_player % 2);
 	this.jump_moves = [];
 	this.center_moves = [];
@@ -278,9 +276,18 @@ GameState.prototype.update = function() {
 	document.getElementById('game-timer').innerHTML = formatted_time;
 	
 	// - Turn time
-	this.turn_time -= this.scene.updatePeriod/500;
+	if (this.turn_time != 0) {
+		this.turn_time -= this.scene.updatePeriod/500;
+	}
+	if (this.turn_time <= 0) {
+		this.turn_time = 0;
+	}
 	var turn_seconds = Math.floor(this.turn_time);
 	document.getElementById('turn-time-countdown').innerHTML = turn_seconds;
+	if (turn_seconds < 10) {
+		document.getElementById('turn-time-countdown').style.color = '#C62828';
+	}
+	
 	
 	// Do animations
 	this.animated = false;
