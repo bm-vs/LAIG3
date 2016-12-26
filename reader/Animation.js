@@ -86,7 +86,7 @@ function AnimationRemove(scene, move, piece, from_x, from_y) {
 	this.from_y = from_y;
 	this.duration = 0.2;
 	this.curr_time = 0;
-	this.move.game_state.selected_piece.id = -1;
+	this.piece.id = -1;
 	if (this.piece.player == 1) {
 		this.to_x = 11.5;
 		this.to_y = this.move.game_state.auxiliar_board1.current_y;
@@ -118,7 +118,7 @@ AnimationRemove.prototype.update = function() {
 	else {
 		var dx = (this.to_x - this.from_x)/this.duration * this.curr_time;
 		var dy = (this.to_y - this.from_y)/this.duration * this.curr_time;
-		var dang = Math.PI/2/this.duration * this.curr_time;
+		var dang = Math.PI/(2*this.duration) * this.curr_time;
 		var d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) - this.length/2;
 	
 		this.piece.x = this.from_x + dx;
