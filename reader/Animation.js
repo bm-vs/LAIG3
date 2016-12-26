@@ -38,8 +38,11 @@ function AnimationPiece(scene, move, piece, from_x, from_y, to_x, to_y) {
 	this.from_y = from_y;
 	this.to_x = to_x;
 	this.to_y = to_y;
-	this.n = this.move.game_state.piece_positions[this.from_y][this.from_x];
-	this.move.game_state.piece_positions[this.from_y][this.from_x] = 0;
+	this.ang = piece.ang;
+	if (this.from_x < 10 && this.from_x >= 0 && this.from_y < 10 && this.from_y >= 0) {
+		this.n = this.move.game_state.piece_positions[this.from_y][this.from_x];
+		this.move.game_state.piece_positions[this.from_y][this.from_x] = 0;
+	}
 	this.length = Math.sqrt(Math.pow(to_x-from_x, 2) + Math.pow(to_y-from_y, 2)); 
 }
 
@@ -47,16 +50,19 @@ AnimationPiece.prototype.update = function() {
 	this.curr_time += this.scene.updatePeriod/1000;
 
 	if (this.curr_time >= this.duration) {
+		this.piece.ang = 0;
 		this.move.finishMove(this.piece, this.to_x, this.to_y);
 	}
 	else {
 		var dx = (this.to_x - this.from_x)/this.duration * this.curr_time;
 		var dy = (this.to_y - this.from_y)/this.duration * this.curr_time;
+		var dang = this.ang - (0-this.ang)/this.duration * this.curr_time;
 		var d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) - this.length/2;
 	
 		this.piece.x = this.from_x + dx;
 		this.piece.y = this.from_y + dy;
 		this.piece.z = Math.sqrt((1-Math.pow(2*d/this.length,2))/4);
+		this.piece.ang = dang;
 	}
 }
 
@@ -87,12 +93,13 @@ AnimationRemove.prototype.update = function() {
 	this.curr_time += this.scene.updatePeriod/1000;
 
 	if (this.curr_time >= this.duration) {
+		this.piece.ang = Math.PI/2;
 		this.move.finishRemoval(this.piece, this.to_x, this.to_y);
 	}
 	else {
 		var dx = (this.to_x - this.from_x)/this.duration * this.curr_time;
 		var dy = (this.to_y - this.from_y)/this.duration * this.curr_time;
-		var dang = Math.PI/(2*this.duration) * this.curr_time;
+		var dang = (Math.PI/2)/this.duration * this.curr_time;
 		var d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)) - this.length/2;
 	
 		this.piece.x = this.from_x + dx;

@@ -40,6 +40,8 @@ function GameState(scene) {
 	
 	// Previous moves
 	this.previous_moves = [];
+	this.player_moves = [1];
+	this.removed_moves = [];
 	
 	// Game time
 	this.game_time = 0;
@@ -131,18 +133,21 @@ GameState.prototype.processPick = function(picked_obj) {
 			this.board.deSelectAllTiles();
 			var game_move = new GameMove(this, picked_obj, false);
 			this.previous_moves.push(game_move);
+			this.player_moves.push(this.current_player);
 			this.nextPlayer();
 		}
 		else if (this.center_moves.indexOf(id) >= 0) {
 			this.board.deSelectAllTiles();
 			var game_move = new GameMove(this, picked_obj, false);
 			this.previous_moves.push(game_move);
+			this.player_moves.push(this.current_player);
 			this.nextPlayer();
 		}
 		else if (this.jump_moves.indexOf(id) >= 0) {
 			this.board.deSelectAllTiles();
 			var game_move = new GameMove(this, picked_obj, true);
 			this.previous_moves.push(game_move);
+			this.player_moves.push(this.current_player);
 			this.jumping = true;
 		}
 	}
@@ -163,7 +168,6 @@ GameState.prototype.checkMultiJump = function() {
 		// Else update moves to only allow jumps and continue
 		if (process_jump_moves.length == 0) {
 			this.jumping = false;
-			this.updateNumberOfPieces();
 			this.nextPlayer();
 		}
 		else {
@@ -172,13 +176,11 @@ GameState.prototype.checkMultiJump = function() {
 			this.center_moves = [];
 			this.adjoin_moves = [];
 			this.jumping = true;
-			this.updateNumberOfPieces();
 			this.board.setSelectedTiles(this.jump_moves);
 		}
 	}
 	else {
 		this.jumping = false;
-		this.updateNumberOfPieces();
 		this.nextPlayer();
 	}
 }
@@ -218,9 +220,20 @@ GameState.prototype.checkIfExistsPiece = function(x, y) {
 	return null;
 }
 
-// Change active player
+// Change active player to next
 GameState.prototype.nextPlayer = function() {
 	this.current_player = 1 + (this.current_player % 2);
+	this.updateToNewPlayer();
+}
+
+// Change active player to previous
+GameState.prototype.previousPlayer = function() {
+	this.current_player = this.player_moves[this.player_moves.length - 1];
+	this.updateToNewPlayer();
+}
+
+// Update game settings to new active player
+GameState.prototype.updateToNewPlayer = function() {
 	this.jump_moves = [];
 	this.center_moves = [];
 	this.adjoin_moves = [];
@@ -297,16 +310,38 @@ GameState.prototype.update = function() {
 			this.previous_moves[i].update();
 			
 			// Wait for current animations to finish
-			if (!this.previous_moves[i].animated && this.jumping) {
+			if (!this.previous_moves[i].animated) {
+				this.updateNumberOfPieces();
+			
 				// Check if more jumps for the selected piece are available (multiple jump move)
-				this.checkMultiJump();
+				if (this.jumping) {
+					this.checkMultiJump();
+				}
 			}
 		}
 	}
 	
+	for (var i = 0; i < this.removed_moves.length; i++) {
+		if (this.removed_moves[i].animated) {
+			this.animated = true;
+			this.removed_moves[i].update();
+			
+			// Wait for current animations to finish
+			if (!this.removed_moves[i].animated) {
+				this.updateNumberOfPieces();
+			}
+		}
+	}
 	
-	if (!this.animated && localStorage.undo === 'true') {
+	if (localStorage.undo === 'true') {
 		localStorage.undo = false;
-		console.log(this.previous_moves);
+		
+		if (!this.animated && this.previous_moves.length > 0) {
+			this.previous_moves[this.previous_moves.length-1].undo();
+			this.removed_moves.push(this.previous_moves[this.previous_moves.length-1]);
+			this.previous_moves.splice(this.previous_moves.length-1, 1);
+			this.player_moves.splice(this.player_moves.length-1, 1);
+			this.previousPlayer();
+		}
 	}
 }
