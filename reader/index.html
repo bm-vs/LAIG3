@@ -26,7 +26,7 @@ canvas {
 
 #interface {
 	width: 100%;
-	height: 100px;
+	height: 80px;
 }
 
 .interface-section {
@@ -141,10 +141,14 @@ canvas {
 </head>
 <body>
 
+<script>
+localStorage.turn_time = 60;
+</script>
+
 <div id='interface'>
 	<section id='time' class='interface-section'>
 		<span class='helper'></span><a><img id='logo' src='resources/logo.png'/></a>
-		<p id='game-timer' class='unselectable'>00:00</p>
+		<p id='game-timer' class='unselectable'></p>
 	</section>
 	
 	<section id='game_info' class='interface-section'>
@@ -154,7 +158,7 @@ canvas {
 		</div>
 		
 		<div id='turn-time'>
-			<p id='turn-time-countdown' class='unselectable'>60</p>
+			<p id='turn-time-countdown' class='unselectable'></p>
 		</div>
 		
 		<div id='player-black'>

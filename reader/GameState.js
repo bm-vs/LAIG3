@@ -45,7 +45,7 @@ function GameState(scene) {
 	this.game_time = 0;
 	
 	// Turn time
-	this.turn_time = 60;
+	this.turn_time = localStorage.turn_time;
 }
 
 GameState.prototype.display = function() {
@@ -94,6 +94,7 @@ GameState.prototype.processPick = function(picked_obj) {
 	}
 	
 	// If picked object belongs to player change selected piece to that
+	// Disabled during animations and multiple jump moves
 	if (picked_obj.player == this.current_player && !this.jumping && !this.animated) {
 		this.board.deSelectAllTiles();
 		this.selected_piece = picked_obj;
@@ -111,10 +112,10 @@ GameState.prototype.processPick = function(picked_obj) {
 		
 		this.board.setSelectedTiles(this.jump_moves.concat(this.adjoin_moves, this.center_moves));
 	}
-	// If picked object is not the players
+	// If picked object is not the players check it corresponds to an available move
+	// Disables during animations
 	else if (this.selected_piece != null && !this.animated) {
 		var id;
-	
 		if (picked_obj instanceof Tile) {
 			id = picked_obj.id - 101;
 		}
@@ -142,6 +143,42 @@ GameState.prototype.processPick = function(picked_obj) {
 		}
 	}
 }
+
+GameState.prototype.checkMultiJump = function() {
+	var board = this.piece_positions;
+	var coord = [this.selected_piece.x, this.selected_piece.y];
+	
+	// Check if selected piece is still on the board
+	// Finish jump move if its not
+	if (this.selected_piece.x < 10 && this.selected_piece.x >= 0 && this.selected_piece.y < 10 && this.selected_piece.y >= 0) {
+		var request_string = this.createRequestString('100', board, coord, this.current_player);
+		var jump_moves = makeRequest(request_string);
+		var process_jump_moves = processString(jump_moves.response);
+		
+		// If there's no available jumps finish the jump
+		// Else update moves to only allow jumps and continue
+		if (process_jump_moves.length == 0) {
+			this.jumping = false;
+			this.updateNumberOfPieces();
+			this.nextPlayer();
+		}
+		else {
+			this.jump_moves = process_jump_moves;
+			this.center_moves = [];
+			this.adjoin_moves = [];
+			this.jumping = true;
+			this.updateNumberOfPieces();
+			this.board.setSelectedTiles(this.jump_moves);
+		}
+	}
+	else {
+		this.jumping = false;
+		this.updateNumberOfPieces();
+		this.nextPlayer();
+	}
+}
+
+
 
 GameState.prototype.createRequestString = function(request_number, board, coord, current_player) {
 	// request string: request_number-board-coord
@@ -183,7 +220,7 @@ GameState.prototype.nextPlayer = function() {
 	this.center_moves = [];
 	this.adjoin_moves = [];
 	
-	this.turn_time = 60;
+	this.turn_time = localStorage.turn_time;
 }
 
 // Return number of pieces in piece_positions with piece value 
@@ -209,8 +246,7 @@ GameState.prototype.updateNumberOfPieces = function() {
 
 GameState.prototype.update = function() {
 	// Update interface
-	
-	// Game time
+	// - Game time
 	this.game_time += this.scene.updatePeriod/500;
 	var minutes = Math.floor(this.game_time/60);
 	var seconds = Math.floor(this.game_time%60);
@@ -225,7 +261,7 @@ GameState.prototype.update = function() {
 	formatted_time += seconds;
 	document.getElementById('game-timer').innerHTML = formatted_time;
 	
-	// Turn time
+	// - Turn time
 	this.turn_time -= this.scene.updatePeriod/500;
 	var turn_seconds = Math.floor(this.turn_time);
 	document.getElementById('turn-time-countdown').innerHTML = turn_seconds;
@@ -237,35 +273,11 @@ GameState.prototype.update = function() {
 			this.animated = true;
 			this.previous_moves[i].update();
 			
+			// Wait for current animations to finish
 			if (!this.previous_moves[i].animated && this.jumping) {
-				// After jump check if more jumps for the selected piece are available
-				var newBoard = this.piece_positions;
-				var newCoord = [this.selected_piece.x, this.selected_piece.y];
-				if (this.selected_piece.x < 10 && this.selected_piece.x >= 0 && this.selected_piece.y < 10 && this.selected_piece.y >= 0) {
-					var request_string = this.createRequestString('100', newBoard, newCoord, this.current_player);
-					var jump_moves = makeRequest(request_string);
-					var process_jump_moves = processString(jump_moves.response);
-					if (process_jump_moves.length == 0) {
-						this.jumping = false;
-						this.updateNumberOfPieces();
-						this.nextPlayer();
-					}
-					else {
-						this.jump_moves = process_jump_moves;
-						this.center_moves = [];
-						this.adjoin_moves = [];
-						this.jumping = true;
-						this.updateNumberOfPieces();
-						this.board.setSelectedTiles(this.jump_moves);
-					}
-				}
-				else {
-					this.jumping = false;
-					this.updateNumberOfPieces();
-					this.nextPlayer();
-				}
+				// Check if more jumps for the selected piece are available (multiple jump move)
+				this.checkMultiJump();
 			}
-			
 		}
 	}
 }

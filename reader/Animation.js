@@ -27,7 +27,7 @@ AnimationCamera.prototype.update = function() {
 	}
 }
 
-
+// Animation to move a piece within the board
 function AnimationPiece(scene, move, piece, from_x, from_y, to_x, to_y) {
 	this.scene = scene;
 	this.move = move;
@@ -47,25 +47,7 @@ AnimationPiece.prototype.update = function() {
 	this.curr_time += this.scene.updatePeriod/1000;
 
 	if (this.curr_time >= this.duration) {
-		this.move.animated = false;
-		this.move.animation = null;
-		this.piece.x = this.to_x;
-		this.piece.y = this.to_y;
-		this.piece.z = 0;
-		if (this.to_x < 10 && this.to_x >= 0 && this.to_y < 10 && this.to_y >= 0) {
-			this.move.game_state.piece_positions[this.to_y][this.to_x] = this.n;
-			this.piece.id = this.to_y*10+this.to_x + 1;
-			if (this.move.animation_jumped != null) {
-				this.move.animated = true;
-				this.move.animation = this.move.animation_jumped;
-				this.move.animation_jumped = null;
-			}
-		}
-		else {
-			// Remove jump piece if it goes out of the board
-			this.move.animated = true;
-			this.move.animation = new AnimationRemove(this.scene, this.move, this.piece, this.to_x, this.to_y); 
-		}
+		this.move.finishMove(this.piece, this.to_x, this.to_y);
 	}
 	else {
 		var dx = (this.to_x - this.from_x)/this.duration * this.curr_time;
@@ -78,6 +60,7 @@ AnimationPiece.prototype.update = function() {
 	}
 }
 
+// Animation to remove a piece from the board to an auxiliar board
 function AnimationRemove(scene, move, piece, from_x, from_y) {
 	this.scene = scene;
 	this.move = move;
@@ -104,16 +87,7 @@ AnimationRemove.prototype.update = function() {
 	this.curr_time += this.scene.updatePeriod/1000;
 
 	if (this.curr_time >= this.duration) {
-		this.move.animated = false;
-		this.move.animation = null;
-		this.piece.x = this.to_x;
-		this.piece.y = this.to_y;
-		
-		if (this.move.animation_jumped != null) {
-			this.move.animated = true;
-			this.move.animation = this.move.animation_jumped;
-			this.move.animation_jumped = null;
-		}
+		this.move.finishRemoval(this.piece, this.to_x, this.to_y);
 	}
 	else {
 		var dx = (this.to_x - this.from_x)/this.duration * this.curr_time;
