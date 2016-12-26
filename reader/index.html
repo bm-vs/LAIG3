@@ -24,16 +24,148 @@ canvas {
 	height: 100%;
 }
 
-#game_info {
+#interface {
 	width: 100%;
-	height: 10%;
+	height: 100px;
 }
 
+.interface-section {
+	background-color: #424242;
+	display: inline-block;
+}
+
+#time {
+	width: 20%;
+	height: 100%;
+	float: left;
+	display: inline-block;
+}
+
+#game_info {
+	width: 60%;
+	height: 100%;
+	float: left;
+	display: inline-block;
+	text-align: center;
+}
+
+#undo {
+	width: 20%;
+	height: 100%;
+	float: right;
+}
+
+#logo {
+	height: auto;
+	width: 25%;
+	vertical-align: middle;
+	margin-left: 10%;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+#game-timer {
+	margin: 0 0 0 10%;
+	display: inline-block;
+	font-size: 1.5vw;
+	font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	color: #CFD8DC;
+	vertical-align: middle;
+}
+
+ #undo-button {
+	height: auto;
+	width: 15%;
+	vertical-align: middle;
+	margin-left: 75%;
+}
+
+#player-white, #player-black {
+	height: 100%;
+	width: 20%;
+	margin: 0 0 0 0;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#turn-time {
+	height: 100%;
+	width: 25%;
+	margin: 0 10% 0 10%;
+	display: inline;
+	vertical-align: middle;
+}
+
+#player-white-score, #player-black-score {
+	margin: 0 0 0 10%;
+	display: inline-block;
+	font-size: 3.5vw;
+	font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	color: #CFD8DC;
+	vertical-align: middle;
+}
+
+#turn-time-countdown {
+	margin: 0 0 0 0;
+	display: inline;
+	font-size: 4.5vw;
+	font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	color: #CFD8DC;
+	text-align: center;
+	vertical-align: middle;
+	
+}
+
+#white-piece, #black-piece {
+	height: auto;
+	width: 30%;
+	vertical-align: middle;
+	margin: 0 5% 0 5%;
+}
+
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
 </style>
 </head>
 <body>
-<div id='game_info'>
+
+<div id='interface'>
+	<section id='time' class='interface-section'>
+		<span class='helper'></span><a><img id='logo' src='resources/logo.png'/></a>
+		<p id='game-timer' class='unselectable'>10:00</p>
+	</section>
+	
+	<section id='game_info' class='interface-section'>
+		<div id='player-white'>
+			<p id='player-white-score' class='unselectable'>50</p>
+			<span class='helper'></span><img id='white-piece' src='resources/white.png'/>
+		</div>
+		
+		<div id='turn-time'>
+			<span id='turn-time-countdown' class='unselectable'>60</span>
+		</div>
+		
+		<div id='player-black'>
+			<p id='player-black-score' class='unselectable'>50</p>
+			<span class='helper'></span><img id='black-piece' src='resources/black.png'/>
+		</div>
+	</section>
+	
+	<section id='undo' class='interface-section'>
+		<span class='helper'></span><a><img id='undo-button' src='resources/undo.png'/></a>
+	</section>	
 </div>
 
 <div id='game'>
