@@ -44,6 +44,18 @@ localStorage.turn_time = 20;
 		localStorage.undo = true;
 	}
 	</script>
+	
+	<section id="modal" class="modal">
+		<h1 id="winner"></h1>
+		<a id="download" download="test.txt" href=""><button id="save" class="button" >Save replay</button></a>
+		<button id="exit" class="button">Exit</button>
+	</section>
+	
+	<script type="text/javascript">
+		document.getElementById("exit").onclick = function () {
+			location.href = "index.html";
+		};
+	</script>
 </div>
 
 <div id='game'>

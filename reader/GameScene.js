@@ -106,7 +106,4 @@ GameScene.prototype.update = function() {
 	if (!this.gameState.ended) {
 		this.gameState.update();
 	}
-	else {
-		console.log(this.gameState.winner);
-	}
 }

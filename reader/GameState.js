@@ -322,17 +322,27 @@ GameState.prototype.updateNumberOfPieces = function() {
 	document.getElementById('player-white-score').innerHTML = nr_pieces2;
 	document.getElementById('player-black-score').innerHTML = nr_pieces1;
 	
-	if (nr_pieces1 == 0 && nr_pieces2 == 0) {
-		this.winner = this.current_player;
-		this.ended = true;
-	}
-	else if (nr_pieces1 == 0) {
-		this.winner = 2;
-		this.ended = true;
-	}
-	else if (nr_pieces2 == 0) {
-		this.winner = 1;
-		this.ended = true;
+	// End the game and choose the winner if either number of pieces is 00
+	if (nr_pieces1 == 0 || nr_pieces2 == 0) {
+		document.getElementById('modal').style.display = "block";
+	
+		if (nr_pieces1 == 0 && nr_pieces2 == 0) {
+			this.winner = this.current_player;
+			this.ended = true;
+		}
+		else if (nr_pieces1 == 0) {
+			this.winner = 2;
+			this.ended = true;
+		}
+		else if (nr_pieces2 == 0) {
+			this.winner = 1;
+			this.ended = true;
+		}
+		
+		document.getElementById('winner').innerHTML = "Player " + this.winner + " wins!";
+		
+		// Save moves to file
+		this.saveGameToFile();
 	}
 }
 
@@ -414,3 +424,40 @@ GameState.prototype.update = function() {
 		}
 	}
 }
+
+
+GameState.prototype.saveGameToFile = function() {
+	var string = "<dsx>";
+	
+	for (var i = 0; i < this.previous_moves.length; i++) {
+		var move = this.previous_moves[i];
+	
+		string += "<move ";
+		string += "from_x=\"" + move.from_x + "\" ";
+		string += "from_y=\"" + move.from_y + "\" ";
+		string += "to_x=\"" + move.to_x + "\" ";
+		string += "to_y=\"" + move.to_y + "\" ";
+		if (move.jump) {
+			string += "jumped_to_x=\"" + move.jumped_to_x + "\" ";
+			string += "jumped_to_y=\"" + move.jumped_to_y + "\" ";
+		}
+		string += "/>";
+	}
+	
+	string += "</dsx>";
+	
+	document.getElementById('download').href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(string);
+	document.getElementById('download').download = this.start_time.getTime() + ".dsx";
+}
+
+
+
+
+
+
+
+
+
+
+
+
