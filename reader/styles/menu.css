@@ -32,7 +32,7 @@ h1 {
 	margin-bottom: 3%;
 }
 
-button {
+.button {
 	font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
 	color: white;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
@@ -53,6 +53,35 @@ button {
 	right: 1%;
 	width: 1.5%;
 }
+
+.modal {
+    display: none;
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.7);
+    font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	text-align: center;
+}
+
+.text-input {
+	font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	font-weight: bold;
+	font-size: 1.25vw;
+	margin-bottom: 0.5%;
+	border-radius: 5px;
+	width: 40%;
+	height: 3vw;
+	outline: none;
+	border: none;
+	padding-left: 1%;
+	padding-right: 1%;
+}
+
 
 .unselectable {
     -webkit-touch-callout: none;

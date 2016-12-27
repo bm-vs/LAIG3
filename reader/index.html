@@ -31,11 +31,33 @@
 			location.href = "game.html";
 		};
 		document.getElementById("watch-replays").onclick = function () {
-			location.href = "game.html";
+			document.getElementById('modal').style.display = "block";
 		};
 		document.getElementById("options").onclick = function () {
 			location.href = "game.html";
 		};
 	</script>
+	
+	<section id="modal" class="modal">
+		<h1 id="choose">Choose file</h1>
+		<form id="form-video" action="javascript:watchVideo()" autocomplete="off">
+			<input type="text" id="input_file_name" class="text-input" placeholder="File name"><br>
+			<input class="button" type="submit" value="Submit">
+		</form>
+		
+		<button id="back" class="button">Back</button>
+	</section>
+	
+	<script type="text/javascript">
+		document.getElementById("back").onclick = function () {
+			location.href = "index.html";
+		};
+	
+		function watchVideo() {
+			localStorage.video_name = document.getElementById('input_file_name').value;
+			location.href = "video.html";
+		}
+	</script>
+	
 </body>
 </html>
