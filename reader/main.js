@@ -19,7 +19,7 @@ serialInclude([
 	'GameMove.js',
 	'Animation.js',
 	'Board.js',
-	'AuxiliarBoard.js',
+	'AuxiliaryBoard.js',
 	'Piece.js',
 	'Tile.js',
 	'Connection.js',

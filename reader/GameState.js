@@ -3,8 +3,8 @@ function GameState(scene) {
 	
 	// Primitives
 	this.board = new Board(scene);
-	this.auxiliar_board1 = new AuxiliarBoard(scene, 1);
-	this.auxiliar_board2 = new AuxiliarBoard(scene, 2);
+	this.auxiliary_board1 = new AuxiliaryBoard(scene, 1);
+	this.auxiliary_board2 = new AuxiliaryBoard(scene, 2);
 	
 	var id = 0;
 	this.pieces = [];
@@ -28,7 +28,6 @@ function GameState(scene) {
 		[2,1,2,1,2,1,2,1,2,1],
 		[1,2,1,2,1,2,1,2,1,2]];
 
-		
 	// Game State variables
 	this.current_player = 1;
 	this.selected_piece = null;
@@ -40,7 +39,7 @@ function GameState(scene) {
 	
 	// Previous moves
 	this.previous_moves = [];
-	this.player_moves = [1];
+	this.player_moves = [];
 	this.removed_moves = [];
 	
 	// Game time
@@ -50,20 +49,21 @@ function GameState(scene) {
 	this.turn_time = localStorage.turn_time;
 }
 
+
 GameState.prototype.display = function() {
 	this.scene.pushMatrix();
 		this.scene.translate(-7.28,0,0);
 		this.scene.rotate(Math.PI, 0, 1, 0);
 		this.scene.rotate(-Math.PI/2, 1, 0, 0);
 		this.scene.scale(10,10,10);
-		this.auxiliar_board1.display();
+		this.auxiliary_board1.display();
 	this.scene.popMatrix();
 	
 	this.scene.pushMatrix();
 		this.scene.translate(7.28,0,0);
 		this.scene.rotate(-Math.PI/2, 1, 0, 0);
 		this.scene.scale(10,10,10);
-		this.auxiliar_board2.display();
+		this.auxiliary_board2.display();
 	this.scene.popMatrix();
 
 	this.scene.pushMatrix();
@@ -81,6 +81,7 @@ GameState.prototype.display = function() {
 	}
 	
 }
+
 
 // Piece id [1, 100], Tile id [101, 200]
 GameState.prototype.processPick = function(picked_obj) {
@@ -153,6 +154,7 @@ GameState.prototype.processPick = function(picked_obj) {
 	}
 }
 
+
 GameState.prototype.checkMultiJump = function() {
 	var board = this.piece_positions;
 	var coord = [this.selected_piece.x, this.selected_piece.y];
@@ -186,7 +188,6 @@ GameState.prototype.checkMultiJump = function() {
 }
 
 
-
 GameState.prototype.createRequestString = function(request_number, board, coord, current_player) {
 	// request string: request_number-board-coord
 	// board lines separated by 9
@@ -209,6 +210,40 @@ GameState.prototype.createRequestString = function(request_number, board, coord,
 	return request_string;
 }
 
+
+// Reset variables on undo
+GameState.prototype.resetState = function() {
+	this.board.deSelectAllTiles();
+	this.jumping = false;
+	this.selected_piece.selected = false;
+	this.selected_piece = null;
+	
+	this.jump_moves = [];
+	this.center_moves = [];
+	this.adjoin_moves = [];
+
+	// If resetting to the middle of a multiple jump lock to piece doing the jumping
+	if (this.previous_moves.length >= 2) {
+		var previous_move1 = this.previous_moves[this.previous_moves.length-1];
+		var previous_move2 = this.previous_moves[this.previous_moves.length-2];
+	
+		if (previous_move1.jump && previous_move2.jump && previous_move1.piece.player == previous_move2.piece.player) {
+			this.jumping = true;
+			this.selected_piece = previous_move1.piece;
+			this.selected_piece.selected = true;
+			
+			var board = this.piece_positions;
+			var coord = [previous_move1.from_x, previous_move1.from_y];
+			var request_string = this.createRequestString('100', board, coord, previous_move1.piece.player);
+			var jump_moves = makeRequest(request_string);
+			var process_jump_moves = processString(jump_moves.response);
+			this.jump_moves = process_jump_moves;
+			this.board.setSelectedTiles(this.jump_moves);
+		}
+	}
+}
+
+
 // Checks if a piece exists with the xy coordinates given
 GameState.prototype.checkIfExistsPiece = function(x, y) {
 	for (var i = 0; i < this.pieces.length; i++) {
@@ -220,24 +255,34 @@ GameState.prototype.checkIfExistsPiece = function(x, y) {
 	return null;
 }
 
+
 // Change active player to next
 GameState.prototype.nextPlayer = function() {
 	this.current_player = 1 + (this.current_player % 2);
 	this.updateToNewPlayer();
-}
-
-// Change active player to previous
-GameState.prototype.previousPlayer = function() {
-	this.current_player = this.player_moves[this.player_moves.length - 1];
-	this.updateToNewPlayer();
-}
-
-// Update game settings to new active player
-GameState.prototype.updateToNewPlayer = function() {
+	
 	this.jump_moves = [];
 	this.center_moves = [];
 	this.adjoin_moves = [];
-	
+}
+
+
+// Change active player to previous
+GameState.prototype.previousPlayer = function() {
+	// When the player undoes the first move
+	if (this.player_moves.length == 0) {
+		this.current_player = 1;
+	}
+	else {
+		this.current_player = this.player_moves[this.player_moves.length - 1];
+	}
+
+	this.updateToNewPlayer();
+}
+
+
+// Update game settings to new active player
+GameState.prototype.updateToNewPlayer = function() {
 	this.turn_time = localStorage.turn_time;
 	
 	if (this.current_player == 1) {
@@ -249,6 +294,7 @@ GameState.prototype.updateToNewPlayer = function() {
 		document.getElementById('player-black').style.backgroundColor = '#424242';
 	}
 }
+
 
 // Return number of pieces in piece_positions with piece value 
 GameState.prototype.getNumberOfPieces = function(piece) {
@@ -265,11 +311,13 @@ GameState.prototype.getNumberOfPieces = function(piece) {
 	return count;
 }
 
+
 // Update number of pieces
 GameState.prototype.updateNumberOfPieces = function() {
 	document.getElementById('player-white-score').innerHTML = this.getNumberOfPieces(2);
 	document.getElementById('player-black-score').innerHTML = this.getNumberOfPieces(1);
 }
+
 
 GameState.prototype.update = function() {
 	// Update interface
@@ -338,10 +386,11 @@ GameState.prototype.update = function() {
 		
 		if (!this.animated && this.previous_moves.length > 0) {
 			this.previous_moves[this.previous_moves.length-1].undo();
+			this.resetState();
 			this.removed_moves.push(this.previous_moves[this.previous_moves.length-1]);
 			this.previous_moves.splice(this.previous_moves.length-1, 1);
-			this.player_moves.splice(this.player_moves.length-1, 1);
 			this.previousPlayer();
+			this.player_moves.splice(this.player_moves.length-1, 1);
 		}
 	}
 }

@@ -39,10 +39,16 @@ function AnimationPiece(scene, move, piece, from_x, from_y, to_x, to_y) {
 	this.to_x = to_x;
 	this.to_y = to_y;
 	this.ang = piece.ang;
-	if (this.from_x < 10 && this.from_x >= 0 && this.from_y < 10 && this.from_y >= 0) {
-		this.n = this.move.game_state.piece_positions[this.from_y][this.from_x];
-		this.move.game_state.piece_positions[this.from_y][this.from_x] = 0;
-	}
+	
+	// If the piece is outside the board reset auxiliary board piece position
+	if (!(this.from_x < 10 && this.from_x >= 0 && this.from_y < 10 && this.from_y >= 0)) {
+		if (this.piece.player == 1) {
+			this.move.game_state.auxiliary_board1.removePiece();
+		}
+		else if (this.piece.player == 2) {
+			this.move.game_state.auxiliary_board2.removePiece();
+		}
+	}	
 	this.length = Math.sqrt(Math.pow(to_x-from_x, 2) + Math.pow(to_y-from_y, 2)); 
 }
 
@@ -66,7 +72,7 @@ AnimationPiece.prototype.update = function() {
 	}
 }
 
-// Animation to remove a piece from the board to an auxiliar board
+// Animation to remove a piece from the board to an auxiliary board
 function AnimationRemove(scene, move, piece, from_x, from_y) {
 	this.scene = scene;
 	this.move = move;
@@ -76,15 +82,17 @@ function AnimationRemove(scene, move, piece, from_x, from_y) {
 	this.duration = 0.2;
 	this.curr_time = 0;
 	this.piece.id = -1;
+	
+	// Change auxiliary board current piece position
 	if (this.piece.player == 1) {
 		this.to_x = 11.5;
-		this.to_y = this.move.game_state.auxiliar_board1.current_y;
-		this.move.game_state.auxiliar_board1.addPiece();
+		this.to_y = this.move.game_state.auxiliary_board1.current_y;
+		this.move.game_state.auxiliary_board1.addPiece();
 	}
 	else if (this.piece.player == 2) {
 		this.to_x = -2.5;
-		this.to_y = this.move.game_state.auxiliar_board2.current_y;
-		this.move.game_state.auxiliar_board2.addPiece();
+		this.to_y = this.move.game_state.auxiliary_board2.current_y;
+		this.move.game_state.auxiliary_board2.addPiece();
 	}
 	this.length = Math.sqrt(Math.pow(this.to_x-this.from_x, 2) + Math.pow(this.to_y-this.from_y, 2)); 
 }
