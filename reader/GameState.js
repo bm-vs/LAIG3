@@ -322,7 +322,7 @@ GameState.prototype.updateNumberOfPieces = function() {
 	document.getElementById('player-white-score').innerHTML = nr_pieces2;
 	document.getElementById('player-black-score').innerHTML = nr_pieces1;
 	
-	// End the game and choose the winner if either number of pieces is 00
+	// End the game and choose the winner if either number of pieces is 0
 	if (nr_pieces1 == 0 || nr_pieces2 == 0) {
 		document.getElementById('modal').style.display = "block";
 	
@@ -344,6 +344,19 @@ GameState.prototype.updateNumberOfPieces = function() {
 		// Save moves to file
 		this.saveGameToFile();
 	}
+}
+
+
+// End game early
+GameState.prototype.endGameEarly = function() {
+	// The player that lets his turn countdown reach 0 loses
+	document.getElementById('modal').style.display = "block";
+	this.ended = true;
+	this.winner = (this.current_player%2)+1;
+	document.getElementById('winner').innerHTML = "Player " + this.winner + " wins!";
+	
+	// Save moves to file
+	this.saveGameToFile();
 }
 
 
@@ -369,6 +382,7 @@ GameState.prototype.update = function() {
 	var turn_seconds = Math.floor((curr_time-this.turn_start_time)/1000);
 	if (turn_seconds >= localStorage.turn_time) {
 		turn_seconds = 0;
+		this.endGameEarly();
 	}
 	else {
 		turn_seconds = localStorage.turn_time - turn_seconds;
