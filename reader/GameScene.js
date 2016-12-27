@@ -59,7 +59,7 @@ GameScene.prototype.setDefaultAppearance = function () {
 };
 
 GameScene.prototype.logPicking = function () {
-	if (this.pickMode == false && !this.changing_camera) {
+	if (this.pickMode == false && !this.changing_camera && !this.gameState.ended) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
 			for (var i=0; i< this.pickResults.length; i++) {
 				var obj = this.pickResults[i][0];
@@ -103,5 +103,10 @@ GameScene.prototype.update = function() {
 		this.camera_animation.update();
 	}
 	
-	this.gameState.update();
+	if (!this.gameState.ended) {
+		this.gameState.update();
+	}
+	else {
+		console.log(this.gameState.winner);
+	}
 }

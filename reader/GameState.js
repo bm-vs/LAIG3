@@ -16,7 +16,7 @@ function GameState(scene) {
 	}
 
 	// Board State
-	this.piece_positions = 
+	this.piece_positions =
 		[[2,1,2,1,2,1,2,1,2,1],
 		[1,2,1,2,1,2,1,2,1,2],
 		[2,1,2,1,2,1,2,1,2,1],
@@ -29,6 +29,8 @@ function GameState(scene) {
 		[1,2,1,2,1,2,1,2,1,2]];
 
 	// Game State variables
+	this.ended = false;
+	this.winner = null;
 	this.current_player = 1;
 	this.selected_piece = null;
 	this.jumping = false;
@@ -43,10 +45,10 @@ function GameState(scene) {
 	this.removed_moves = [];
 	
 	// Game time
-	this.game_time = 0;
+	this.start_time = new Date();
 	
 	// Turn time
-	this.turn_time = localStorage.turn_time;
+	this.turn_start_time = new Date();
 }
 
 
@@ -283,7 +285,7 @@ GameState.prototype.previousPlayer = function() {
 
 // Update game settings to new active player
 GameState.prototype.updateToNewPlayer = function() {
-	this.turn_time = localStorage.turn_time;
+	this.turn_start_time = new Date();
 	
 	if (this.current_player == 1) {
 		document.getElementById('player-black').style.backgroundColor = '#388E3C';
@@ -314,17 +316,34 @@ GameState.prototype.getNumberOfPieces = function(piece) {
 
 // Update number of pieces
 GameState.prototype.updateNumberOfPieces = function() {
-	document.getElementById('player-white-score').innerHTML = this.getNumberOfPieces(2);
-	document.getElementById('player-black-score').innerHTML = this.getNumberOfPieces(1);
+	var nr_pieces1 = this.getNumberOfPieces(1);
+	var nr_pieces2 = this.getNumberOfPieces(2);
+
+	document.getElementById('player-white-score').innerHTML = nr_pieces2;
+	document.getElementById('player-black-score').innerHTML = nr_pieces1;
+	
+	if (nr_pieces1 == 0 && nr_pieces2 == 0) {
+		this.winner = this.current_player;
+		this.ended = true;
+	}
+	else if (nr_pieces1 == 0) {
+		this.winner = 2;
+		this.ended = true;
+	}
+	else if (nr_pieces2 == 0) {
+		this.winner = 1;
+		this.ended = true;
+	}
 }
 
 
 GameState.prototype.update = function() {
 	// Update interface
 	// - Game time
-	this.game_time += this.scene.updatePeriod/500;
-	var minutes = Math.floor(this.game_time/60);
-	var seconds = Math.floor(this.game_time%60);
+	var curr_time = new Date();
+	var diff = Math.floor((curr_time-this.start_time)/1000);
+	var minutes = Math.floor(diff/60);
+	var seconds = Math.floor(diff%60);
 	var formatted_time = "";
 	if (minutes < 10) {
 		formatted_time += "0";
@@ -337,14 +356,15 @@ GameState.prototype.update = function() {
 	document.getElementById('game-timer').innerHTML = formatted_time;
 	
 	// - Turn time
-	if (this.turn_time != 0) {
-		this.turn_time -= this.scene.updatePeriod/500;
+	var turn_seconds = Math.floor((curr_time-this.turn_start_time)/1000);
+	if (turn_seconds >= localStorage.turn_time) {
+		turn_seconds = 0;
 	}
-	if (this.turn_time <= 0) {
-		this.turn_time = 0;
+	else {
+		turn_seconds = localStorage.turn_time - turn_seconds;
 	}
-	var turn_seconds = Math.floor(this.turn_time);
 	document.getElementById('turn-time-countdown').innerHTML = turn_seconds;
+	document.getElementById('turn-time-countdown').style.color = '#CFD8DC';
 	if (turn_seconds < 10) {
 		document.getElementById('turn-time-countdown').style.color = '#C62828';
 	}
