@@ -4,8 +4,13 @@ function Piece(scene, id, x, y) {
 	this.x = x;
 	this.y = y;
 	this.z = 0;
-	this.ang = 0;
+	this.ang = 0;	
+	this.type = localStorage.theme;
 	this.piece = new Cylinder(scene, 0.42, 0.42, 32, 8, 0.17);
+	if (this.type == 2) {
+		this.outer = new Torus(scene, 0.32, 0.42, 32, 32);
+		this.inner = new Torus(scene, 0.20, 0.30, 32, 32);
+	}
 	this.appearance = new CGFappearance(scene);
 	this.selected = false;
 	this.selected_appearance = new CGFappearance(scene);
@@ -66,10 +71,29 @@ Piece.prototype.display = function() {
 		else {
 			this.appearance.apply();
 		}
-		//this.scene.scale(1, 1, 0.75);
+		
+		
 		this.scene.translate(this.x, this.y, 0.4+this.z);
 		this.scene.rotate(this.ang, 1, 0, 0);
 		this.scene.registerForPick(this.id, this);
 		this.piece.display();
 	this.scene.popMatrix();
+	
+	if (this.type == 2) {
+		this.scene.pushMatrix();
+			this.scene.translate(this.x, this.y, 0.4+this.z);
+			this.scene.rotate(this.ang, 1, 0, 0);
+			this.scene.translate(0, 0, 0.16);
+			this.scene.registerForPick(this.id, this);
+			this.outer.display();
+		this.scene.popMatrix();
+		
+		this.scene.pushMatrix();
+			this.scene.translate(this.x, this.y, 0.4+this.z);
+			this.scene.rotate(this.ang, 1, 0, 0);
+			this.scene.translate(0, 0, 0.14);
+			this.scene.registerForPick(this.id, this);
+			this.inner.display();
+		this.scene.popMatrix();
+	}
 }

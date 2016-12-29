@@ -28,6 +28,7 @@ serialInclude([
 	'../primitives/Box.js',
 	'../primitives/Quad.js',
 	'../primitives/Cube.js',
+	'../primitives/Torus.js',
 	'../common/Utilities.js',
 
 main=function()

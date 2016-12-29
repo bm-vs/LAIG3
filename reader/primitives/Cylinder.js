@@ -82,9 +82,6 @@ Cylinder.prototype.initBuffers = function() {
         }
     }
 
-
-
-
     vsize = this.vertices.length/3 - 1;
 
     this.vertices.push(0,0,this.height);

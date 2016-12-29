@@ -60,7 +60,7 @@ VideoState.prototype.display = function() {
 	this.scene.popMatrix();
 
 	for (var pieces = 0; pieces < this.pieces.length; pieces++) {
-		this.scene.pushMatrix();
+		this.scene.pushMatrix();		
 			this.scene.translate(-4.5, 0, 4.5);
 			this.scene.rotate(-Math.PI/2, 1, 0, 0);
 			this.pieces[pieces].display();
