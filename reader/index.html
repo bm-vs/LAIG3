@@ -7,6 +7,13 @@
 	<link rel="stylesheet" type="text/css" href="styles/menu.css" />
 </head>
 <body>
+	<script>
+		localStorage.undo = false;
+		localStorage.turn_time = 20;
+		localStorage.player1 = "Player";
+		localStorage.player2 = "Player";
+	</script>
+
 	<a href="https://github.com/BSantos22/LAIG3" target="_blank"><img src="resources/github.png" id="github-img"></a>
 	<img id='logo' src='resources/logo.png'/>
 	
@@ -22,12 +29,18 @@
 	
 	<script type="text/javascript">
 		document.getElementById("player-vs-player").onclick = function () {
+			localStorage.player1 = "Player";
+			localStorage.player2 = "Player";
 			location.href = "game.html";
 		};
 		document.getElementById("player-vs-computer").onclick = function () {
+			localStorage.player1 = "Player";
+			localStorage.player2 = "Computer";
 			location.href = "game.html";
 		};
 		document.getElementById("computer-vs-computer").onclick = function () {
+			localStorage.player1 = "Computer";
+			localStorage.player2 = "Computer";
 			location.href = "game.html";
 		};
 		document.getElementById("watch-replays").onclick = function () {

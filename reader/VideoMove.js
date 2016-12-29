@@ -111,8 +111,6 @@ VideoMove.prototype.getPieceFromCoord = function(x, y) {
 			return this.game_state.pieces[i];
 		}
 	}
-	
-	// alert file corrupted
 }
 
 

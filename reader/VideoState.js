@@ -34,6 +34,7 @@ function VideoState(scene) {
 	this.ended = false;
 	this.moves = [];
 	this.current_move = -1;
+	this.current_player = 1;
 }
 
 VideoState.prototype.display = function() {
@@ -93,6 +94,7 @@ VideoState.prototype.nextMove = function() {
 	if (this.current_move < this.moves.length - 1) {
 		this.current_move++;
 		this.moves[this.current_move].animated = true;
+		this.current_player = this.piece_positions[this.moves[this.current_move].from_y][this.moves[this.current_move].from_x];
 		this.moves[this.current_move].startAnimation();
 	}
 }
@@ -120,8 +122,8 @@ VideoState.prototype.updateNumberOfPieces = function() {
 	document.getElementById('player-white-score').innerHTML = nr_pieces2;
 	document.getElementById('player-black-score').innerHTML = nr_pieces1;
 	
-	// End the game and choose the winner if either number of pieces is 00
-	if (nr_pieces1 == 0 || nr_pieces2 == 0) {
+	// End the game and choose the winner if either number of pieces is 0 or the last move was made
+	if (nr_pieces1 == 0 || nr_pieces2 == 0 || this.current_move == this.moves.length-1) {
 		document.getElementById('modal').style.display = "block";
 	
 		if (nr_pieces1 == 0 && nr_pieces2 == 0) {
@@ -134,6 +136,10 @@ VideoState.prototype.updateNumberOfPieces = function() {
 		}
 		else if (nr_pieces2 == 0) {
 			this.winner = 1;
+			this.ended = true;
+		}
+		else {
+			this.winner = this.current_player;
 			this.ended = true;
 		}
 		

@@ -49,6 +49,11 @@ function GameState(scene) {
 	
 	// Turn time
 	this.turn_start_time = new Date();
+	
+	// Computer plays
+	if (localStorage.player1 === "Computer" && localStorage.player2 === "Computer") {
+		this.scene.setPickEnabled(false);
+	}
 }
 
 
@@ -105,8 +110,7 @@ GameState.prototype.processPick = function(picked_obj) {
 		if (this.selected_piece != null) {
 			this.selected_piece.selected = false;
 		}
-		this.selected_piece = picked_obj;
-		this.selected_piece.selected = true;
+		
 		var request_string = this.createRequestString('100', board, coord, this.current_player);
 		var jump_moves = makeRequest(request_string);
 		this.jump_moves = processString(jump_moves.response);
@@ -119,7 +123,13 @@ GameState.prototype.processPick = function(picked_obj) {
 		var center_moves = makeRequest(request_string);
 		this.center_moves = processString(center_moves.response);
 		
-		this.board.setSelectedTiles(this.jump_moves.concat(this.adjoin_moves, this.center_moves));
+		var available_moves = this.jump_moves.concat(this.adjoin_moves, this.center_moves);
+		
+		if (available_moves.length > 0) {
+			this.selected_piece = picked_obj;
+			this.selected_piece.selected = true;
+			this.board.setSelectedTiles(available_moves);
+		}
 	}
 	// If picked object is not the players check it corresponds to an available move
 	// Disables during animations
@@ -157,6 +167,38 @@ GameState.prototype.processPick = function(picked_obj) {
 }
 
 
+// Decide move for computer
+GameState.prototype.computerPickMove = function() {
+	// Choose random piece to play
+	if (this.selected_piece == null) {
+		var pieces = this.getAllPiecesOfCurrentPlayer();
+		var piece_index = Math.floor(Math.random() * pieces.length);
+		this.processPick(pieces[piece_index]);
+	}
+	// Choose random play
+	else {
+		var available_moves = this.jump_moves.concat(this.adjoin_moves, this.center_moves);
+		var move_index = Math.floor(Math.random() * available_moves.length);
+		var tile = this.board.getTile(available_moves[move_index]);
+		this.processPick(tile);
+	}
+}
+
+GameState.prototype.getAllPiecesOfCurrentPlayer = function() {
+	var array = [];
+
+	for (var i = 0; i < this.pieces.length; i++) {
+		if (this.pieces[i].player == this.current_player && this.pieces[i].x >= 0 && this.pieces[i].x <= 9 && this.pieces[i].y >= 0 && this.pieces[i].y <= 9) {
+			array.push(this.pieces[i]);
+		}
+	}
+	
+	return array;
+}
+
+
+
+// Check if the current move is a multi jump
 GameState.prototype.checkMultiJump = function() {
 	var board = this.piece_positions;
 	var coord = [this.selected_piece.x, this.selected_piece.y];
@@ -217,8 +259,10 @@ GameState.prototype.createRequestString = function(request_number, board, coord,
 GameState.prototype.resetState = function() {
 	this.board.deSelectAllTiles();
 	this.jumping = false;
-	this.selected_piece.selected = false;
-	this.selected_piece = null;
+	if (this.selected_piece != null) {
+		this.selected_piece.selected = false;
+		this.selected_piece = null;
+	}
 	
 	this.jump_moves = [];
 	this.center_moves = [];
@@ -261,6 +305,11 @@ GameState.prototype.checkIfExistsPiece = function(x, y) {
 // Change active player to next
 GameState.prototype.nextPlayer = function() {
 	this.current_player = 1 + (this.current_player % 2);
+	if (this.selected_piece != null) {
+		this.selected_piece.selected = false;
+		this.selected_piece = null;
+	}
+	
 	this.updateToNewPlayer();
 	
 	this.jump_moves = [];
@@ -290,10 +339,24 @@ GameState.prototype.updateToNewPlayer = function() {
 	if (this.current_player == 1) {
 		document.getElementById('player-black').style.backgroundColor = '#388E3C';
 		document.getElementById('player-white').style.backgroundColor = '#424242';
+		
+		if (localStorage.player1 === "Computer") {
+			this.scene.setPickEnabled(false);
+		}
+		else {
+			this.scene.setPickEnabled(true);
+		}
 	}
 	else if (this.current_player == 2) {
 		document.getElementById('player-white').style.backgroundColor = '#388E3C';
 		document.getElementById('player-black').style.backgroundColor = '#424242';
+		
+		if (localStorage.player2 === "Computer") {
+			this.scene.setPickEnabled(false);
+		}
+		else {
+			this.scene.setPickEnabled(true);
+		}
 	}
 }
 
@@ -392,8 +455,7 @@ GameState.prototype.update = function() {
 	if (turn_seconds < 10) {
 		document.getElementById('turn-time-countdown').style.color = '#C62828';
 	}
-	
-	
+		
 	// Do animations
 	this.animated = false;
 	for (var i = 0; i < this.previous_moves.length; i++) {
@@ -425,6 +487,7 @@ GameState.prototype.update = function() {
 		}
 	}
 	
+	// Undo move
 	if (localStorage.undo === 'true') {
 		localStorage.undo = false;
 		
@@ -435,6 +498,14 @@ GameState.prototype.update = function() {
 			this.previous_moves.splice(this.previous_moves.length-1, 1);
 			this.previousPlayer();
 			this.player_moves.splice(this.player_moves.length-1, 1);
+		}
+	}
+	
+	// Computer move
+	if (this.animated == false) {
+		if ((localStorage.player1 === "Computer" && this.current_player == 1) ||
+			(localStorage.player2 === "Computer" && this.current_player == 2)) {
+				this.computerPickMove();
 		}
 	}
 }

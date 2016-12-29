@@ -8,11 +8,6 @@
 </head>
 <body>
 
-<script>
-localStorage.undo = false;
-localStorage.turn_time = 20;
-</script>
-
 <div id='interface'>
 	<section id='time' class='interface-section'>
 		<span class='helper'></span><a><img id='logo' src='resources/logo.png'/></a>
@@ -38,6 +33,12 @@ localStorage.turn_time = 20;
 	<section id='undo' class='interface-section'>
 		<span class='helper'></span><a><img id='undo-button' onclick="undo()" src='resources/undo.png'/></a>
 	</section>
+	
+	<script>
+		if (localStorage.player1 === "Computer" || localStorage.player2 === "Computer") {
+			document.getElementById('undo-button').style.display = "none";
+		}
+	</script>
 	
 	<script>
 	function undo() {

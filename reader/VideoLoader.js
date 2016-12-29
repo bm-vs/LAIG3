@@ -25,6 +25,10 @@ VideoLoader.prototype.parseDSX = function(rootElement) {
 	var video_moves = [];
 
 	var moves = rootElement.getElementsByTagName("move");
+	if (moves.length == 0) {
+		this.onXMLError();
+	}
+	
 	for (var i = 0; i < moves.length; i++) {
 		var from_x = null; var from_y = null; var to_x = null; var to_y = null; var jumped_to_x = null; var jumped_to_y = null; var move = null;
 		from_x = this.reader.getInteger(moves[i],"from_x",true);

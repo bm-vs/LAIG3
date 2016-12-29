@@ -35,11 +35,19 @@ Board.prototype.deSelectAllTiles = function() {
 }
 
 Board.prototype.setSelectedTiles = function(tiles) {
-	for (var i = 0; i < this.tiles.length; i++) {
-		if (tiles.indexOf(this.tiles[i].id - 101) >= 0) {
-			this.tiles[i].selected = true;
-		}
+	// Only show selected tiles when the current player is a human
+	if ((this.scene.gameState.current_player == 1 && localStorage.player1 == "Player") ||
+		(this.scene.gameState.current_player == 2 && localStorage.player2 == "Player")) {
+			for (var i = 0; i < this.tiles.length; i++) {
+				if (tiles.indexOf(this.tiles[i].id - 101) >= 0) {
+					this.tiles[i].selected = true;
+				}
+			}
 	}
+}
+
+Board.prototype.getTile = function(n) {
+	return this.tiles[n];
 }
 
 Board.prototype.display = function() {
