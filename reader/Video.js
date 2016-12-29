@@ -51,6 +51,7 @@ main=function()
 
 	// start
 	app.run();
+	document.getElementById('loading').style.display = "none";
 }
 
 ]);
