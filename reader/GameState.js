@@ -31,7 +31,8 @@ function GameState(scene) {
 	// Game State variables
 	this.ended = false;
 	this.winner = null;
-	this.current_player = 1;
+	this.current_player = localStorage.first_player;
+	this.updateToNewPlayer();
 	this.selected_piece = null;
 	this.jumping = false;
 	this.animated = false;
@@ -309,7 +310,7 @@ GameState.prototype.nextPlayer = function() {
 		this.selected_piece.selected = false;
 		this.selected_piece = null;
 	}
-	
+	this.turn_start_time = new Date();
 	this.updateToNewPlayer();
 	
 	this.jump_moves = [];
@@ -327,15 +328,14 @@ GameState.prototype.previousPlayer = function() {
 	else {
 		this.current_player = this.player_moves[this.player_moves.length - 1];
 	}
-
+	this.turn_start_time = new Date();
+	
 	this.updateToNewPlayer();
 }
 
 
 // Update game settings to new active player
 GameState.prototype.updateToNewPlayer = function() {
-	this.turn_start_time = new Date();
-	
 	if (this.current_player == 1) {
 		document.getElementById('player-black').style.backgroundColor = '#388E3C';
 		document.getElementById('player-white').style.backgroundColor = '#424242';
@@ -442,8 +442,9 @@ GameState.prototype.update = function() {
 	document.getElementById('game-timer').innerHTML = formatted_time;
 	
 	// - Turn time (only for human players)
-	if ((localStorage.player1 === "Player" && this.current_player == 1) ||
-		(localStorage.player2 === "Player" && this.current_player == 2)) {		
+	if (((localStorage.player1 === "Player" && this.current_player == 1) ||
+		 (localStorage.player2 === "Player" && this.current_player == 2)) &&
+		 (localStorage.turn_time > 0)){		
 			var turn_seconds = Math.floor((curr_time-this.turn_start_time)/1000);
 			if (turn_seconds >= localStorage.turn_time) {
 				turn_seconds = 0;

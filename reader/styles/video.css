@@ -13,10 +13,8 @@ canvas {
 }
 
 p {
-	font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	font-family: 'Roboto', sans-serif;
 	color: #CFD8DC;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-	font-weight: bold;
 }
 
 #loading {
@@ -41,10 +39,28 @@ p {
 	height: 80px;
 }
 
-#undo {
+#playstop {
 	width: 20%;
 	height: 100%;
 	float: right;
+}
+
+#play-button, #stop-button  {
+	position: absolute;
+	height: auto;
+	width: 2.5vw;
+	vertical-align: middle;
+	top: calc((80px - 2.5vw)/2);
+	right: 2%;
+	
+}
+
+#play-button:hover, #stop-button:hover {
+	cursor: pointer;
+}
+
+.transparent {
+	opacity: 0;
 }
 
 .interface-section {
@@ -130,25 +146,21 @@ p {
     height: 100%;
     overflow: hidden;
     background-color: rgba(0,0,0,0.7);
-    font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+    font-family: 'Roboto', sans-serif;
 	text-align: center;
 }
 
 h1 {
-	font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	font-family: 'Roboto', sans-serif;
 	color: #388E3C;
-	text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-	font-weight: bold;
 	font-size: 4vw;
 	margin-top: 100px;
 	margin-bottom: 4%;
 }
 
 button {
-	font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	font-family: 'Roboto', sans-serif;
 	color: white;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-	font-weight: bold;
 	font-size: 1.25vw;
 	margin: 0.5%;
 	border-radius: 5px;

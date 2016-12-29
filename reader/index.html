@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <title>Cage</title>
 	<link rel="icon" href="resources/logo.png" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="styles/menu.css" />
 </head>
 <body>
 	<script>
 		localStorage.undo = false;
+		localStorage.playstop = "play";
 		localStorage.player1 = "Player";
 		localStorage.player2 = "Player";
 		if (localStorage.turn_time == null || localStorage.first_player == null ||
@@ -31,6 +33,7 @@
 	<li><button id="computer-vs-computer" class="button">Computer vs Computer</button></li>
 	<li><button id="watch-replays" class="button">Watch replays</button></li>
 	<li><button id="options" class="button">Options</button></li>
+	<li><button id="help" class="button">Help</button></li>
 	</ul>
 	
 	<script type="text/javascript">
@@ -54,6 +57,9 @@
 		};
 		document.getElementById("options").onclick = function () {
 			location.href = "options.html";
+		};
+		document.getElementById("help").onclick = function () {
+			window.open('http://www.marksteeregames.com/Cage_rules.html','_blank');
 		};
 	</script>
 	

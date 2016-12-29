@@ -21,8 +21,6 @@ VideoScene.prototype.init = function (application) {
 	this.enableTextures(true);
 	this.setUpdatePeriod(10);
 	
-	this.stop = false;
-	
 	// Create video state
 	this.videoState = new VideoState(this);
 };
@@ -83,11 +81,11 @@ VideoScene.prototype.display = function() {
 };
 
 VideoScene.prototype.startPause = function() {
-	if (this.stop) {
-		this.stop = false;
+	if (localStorage.playstop === "play") {
+		localStorage.playstop = "stop";
 	}
 	else {
-		this.stop = true;
+		localStorage.playstop = "play";
 	}
 }
 
@@ -96,7 +94,7 @@ VideoScene.prototype.update = function() {
 		this.camera_animation.update();
 	}
 	
-	if (this.videoState.loadedOk && !this.videoState.ended && !this.stop) {
+	if (this.videoState.loadedOk && !this.videoState.ended && localStorage.playstop === "play") {
 		this.videoState.update();
 	}
 }

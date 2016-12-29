@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Cage</title>
 	<link rel="icon" href="resources/logo.png" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="styles/video.css" />
 </head>
 <body>
@@ -34,8 +35,25 @@
 		</div>
 	</section>
 	
-	<section id='undo' class='interface-section'>
+	<section id='playstop' class='interface-section'>
+		<span class='helper'></span>
+		<a><img id='play-button' class="transparent" onclick="playstop()" src='resources/play.png'/></a>
+		<a><img id='stop-button' class="" onclick="playstop()" src='resources/stop.png'/></a>
 	</section>
+	
+	<script>
+	function playstop() {
+		document.querySelector('#play-button').classList.toggle("transparent");
+		document.querySelector('#stop-button').classList.toggle("transparent");
+	
+		if (localStorage.playstop === "play") {
+			localStorage.playstop = "stop";
+		}
+		else {
+			localStorage.playstop = "play";
+		}
+	}
+	</script>
 	
 	<section id="modal" class="modal">
 		<h1 id="winner"></h1>
