@@ -9,12 +9,15 @@
 <body>
 	<script>
 		localStorage.undo = false;
-		localStorage.turn_time = 60;
 		localStorage.player1 = "Player";
 		localStorage.player2 = "Player";
-		localStorage.first_player = 1;
-		localStorage.difficulty = 1;
-		localStorage.theme = 1;
+		if (localStorage.turn_time == null || localStorage.first_player == null ||
+			localStorage.difficulty == null || localStorage.theme == null) {
+				localStorage.turn_time = 60;
+				localStorage.first_player = 1;
+				localStorage.difficulty = 1;
+				localStorage.theme = 1;
+		}
 	</script>
 
 	<a href="https://github.com/BSantos22/LAIG3" target="_blank"><img src="resources/github.png" id="github-img"></a>

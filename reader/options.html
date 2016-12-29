@@ -13,86 +13,118 @@
 	<h1 id='title' class='unselectable'>Options</h1>
 	
 	<form action='javascript:setOptions()'>
-		<p>Turn Time</p><input type="range" id="turn_time" min="0" max="120" step="5" oninput="change_turn_time_value()"><p id="turn_time_value"></p>
-		<p>First Player</p><input type="range" id="first_player" min="1" max="2" step="1" oninput="change_first_player_value()"><p id="first_player_value"></p>
-		<p>Difficulty</p><input type="range" id="difficulty" min="1" max="3" step="1" oninput="change_difficulty_value()"><p id="difficulty_value"></p>
-		<p>Theme</p><input type="range" id="theme" min="1" max="4" step="1" oninput="change_theme_value()"><p id="theme_value"></p>
+		<table>
+		<tr>
+			<th>Turn Time</th>
+			<th><input type="range" id="turn_time" min="0" max="120" step="5" oninput="changeTurnTime()"></th>
+			<th id="turn_time_value"></th>
+		</tr>
+		<tr>
+			<th>First Player</th>
+			<th><input type="range" id="first_player" min="1" max="2" step="1" oninput="changeFirstPlayer()"></th>
+			<th id="first_player_value"></th>
+		</tr>
+		<tr>
+			<th>Difficulty</th>
+			<th><input type="range" id="difficulty" min="1" max="3" step="1" oninput="changeDifficulty()"></th>
+			<th id="difficulty_value"></th>
+		</tr>
+		<tr>
+			<th>Theme</th>
+			<th><input type="range" id="theme" min="1" max="4" step="1" oninput="changeTheme()"></th>
+			<th id="theme_value"></th>
+		</tr>
+		</table>
+		
+		<input class="button" type="submit" id="submit" value="Back">
 	</form>
 	
 	<script>
-		document.getElementById('first_player').innerHTML = localStorage.first_player;
-		document.getElementById('difficulty').innerHTML = localStorage.difficulty;
-		document.getElementById('theme').innerHTML = localStorage.theme;
-		document.getElementById('turn_time').innerHTML = localStorage.turn_time;
-		document.getElementById('first_player_value').innerHTML = localStorage.first_player;
-		document.getElementById('difficulty_value').innerHTML = localStorage.difficulty;
-		document.getElementById('theme_value').innerHTML = localStorage.theme;
-		document.getElementById('turn_time_value').innerHTML = localStorage.turn_time;
+		document.getElementById('first_player').value = localStorage.first_player;
+		document.getElementById('difficulty').value = localStorage.difficulty;
+		document.getElementById('theme').value = localStorage.theme;
+		document.getElementById('turn_time').value = localStorage.turn_time;
+		document.getElementById('first_player_value').innerHTML = getFirstPlayer(localStorage.first_player);
+		document.getElementById('difficulty_value').innerHTML = getDifficulty(localStorage.difficulty);
+		document.getElementById('theme_value').innerHTML = getTheme(localStorage.theme);
+		document.getElementById('turn_time_value').innerHTML = getTurnTime(localStorage.turn_time);
 	
 		function setOptions() {
 			localStorage.first_player = document.getElementById('first_player').value;
 			localStorage.difficulty = document.getElementById('difficulty').value;
 			localStorage.theme = document.getElementById('theme').value;
 			localStorage.turn_time = document.getElementById('turn_time').value;
-			//location.href = "index.html";
+			location.href = "index.html";
 		}
 	
-		function change_turn_time_value() {
-			var val = document.getElementById('turn_time').value;
+		function getTurnTime(val) {
 			if (val == 0) {
-				document.getElementById('turn_time_value').innerHTML = "Off"
+				return "Off";
 			}
 			else {
-				document.getElementById('turn_time_value').innerHTML = val;
+				return val;
 			}
-		}
-		
-		function change_first_player_value() {
-			var val = document.getElementById('first_player').value;
-			var name;
-			if (val == 1) {
-				name = "Black";
-			}
-			else {
-				name = "White";
-			}
-			
-			document.getElementById('first_player_value').innerHTML = name;
-		}
-		
-		function change_difficulty_value() {
-			var val = document.getElementById('difficulty').value;
-			var name;
-			if (val == 1) {
-				name = "Easy";
-			}
-			else if (val == 2){
-				name = "Medium";
-			}
-			else {
-				name = "Hard";
-			}
-			
-			document.getElementById('difficulty_value').innerHTML = name;
 		}
 	
-		function change_theme_value() {
-			var val = document.getElementById('theme').value;
-			var name;
+		function changeTurnTime() {
+			var val = document.getElementById('turn_time').value;
+			var string = getTurnTime(val);
+			document.getElementById('turn_time_value').innerHTML = string;
+		}
+		
+		function getFirstPlayer(val) {
 			if (val == 1) {
-				name = "Clown Fiesta";
+				return "Black";
+			}
+			else {
+				return "White";
+			}
+
+		}
+		
+		function changeFirstPlayer() {
+			var val = document.getElementById('first_player').value;
+			var string = getFirstPlayer(val);
+			document.getElementById('first_player_value').innerHTML = string;
+		}
+		
+		function getDifficulty(val) {
+			if (val == 1) {
+				return "Easy";
 			}
 			else if (val == 2){
-				name = "Hi";
+				return "Medium";
+			}
+			else {
+				return "Hard";
+			}
+		}
+		
+		function changeDifficulty() {
+			var val = document.getElementById('difficulty').value;
+			var string = getDifficulty(val);
+			document.getElementById('difficulty_value').innerHTML = string;
+		}
+	
+		function getTheme(val) {
+			if (val == 1) {
+				return "Clown Fiesta";
+			}
+			else if (val == 2){
+				return "Hi";
 			}
 			else if (val == 3){
-				name = "Anotha one";
+				return "Anotha one";
 			}
 			else {
-				name = "Fack";
+				return "Fack";
 			}
-			
-			document.getElementById('theme_value').innerHTML = name;
+		}
+	
+		function changeTheme() {
+			var val = document.getElementById('theme').value;
+			var string = getTheme(val);
+			document.getElementById('theme_value').innerHTML = string;
 		}
 	</script>
 	

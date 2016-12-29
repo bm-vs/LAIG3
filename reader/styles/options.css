@@ -19,6 +19,39 @@ h1 {
 	margin-bottom: 3%;
 }
 
+form {
+	text-align: center;
+}
+
+table {
+	position:relative;
+	left:37vw; 
+	width: 33vw;
+	table-layout: fixed;
+	height: 10vw;
+}
+
+th {
+	width: 11vw;
+	text-align: left;
+	font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	color: #CFD8DC;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
+	font-size: 1.5vw;
+	padding: 5px;
+}
+
+#submit {
+	top: 4vw;
+	position: relative;
+}
+
+#turn_time_value, #theme_value, #difficulty_value, #first_player_value {
+	font-size: 1vw;
+	color: #388E3C;
+}
+
 #logo {
 	width: 7%;
 	height: auto;
@@ -32,6 +65,115 @@ h1 {
 	top: 1%;
 	right: 1%;
 	width: 1.5%;
+}
+
+.button {
+	font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
+	font-size: 1.25vw;
+	margin-bottom: 0.5%;
+	border-radius: 5px;
+	background-color: #388E3C;
+	width: 20%;
+	height: 3vw;
+	outline: none;
+	border: none;
+}
+
+.button:hover {
+	cursor: pointer;
+	background-color: #1B5E20;
+}
+
+
+input[type=range] {
+    -webkit-appearance: none;
+    width: 9vw;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+	cursor: pointer;
+	background: #1B5E20;
+}
+input[type=range]::-moz-range-thumb:hover {
+	cursor: pointer;
+	background: #1B5E20;
+}
+input[type=range]::-ms-thumb:hover {
+	cursor: pointer;
+	background: #1B5E20;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 9vw;
+    height: 5px;
+    background: #CFD8DC;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #388E3C;
+    margin-top: -4px;
+}
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-moz-range-track {
+    width: 9vw;
+    height: 5px;
+    background: #CFD8DC;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #388E3C;
+}
+
+input[type=range]:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+input[type=range]::-ms-track {
+    width: 9vw;
+    height: 5px;
+    background: transparent;
+    border-color: transparent;
+    border-width: 6px 0;
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #777;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #388E3C;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #888;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
 }
 
 .unselectable {
