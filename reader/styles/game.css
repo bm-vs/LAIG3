@@ -5,6 +5,7 @@ body, html {
     overflow: hidden;
 	width: 100%;
 	height: 100%;
+	background-color: #CCE5FF;
 }
 
 canvas {
@@ -18,7 +19,9 @@ canvas:hover {
 
 p {
 	font-family: 'Roboto', sans-serif;
-	color: #CFD8DC;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
 }
 
 
@@ -33,7 +36,7 @@ p {
 }
 
 .interface-section {
-	background-color: #424242;
+	background-color: #CCE5FF;
 	display: inline-block;
 }
 
@@ -102,10 +105,6 @@ p {
 	border-radius: 3px;
 }
 
-#player-black {
-	background-color: #388E3C;
-}
-
 #turn-time {
 	height: 50px;
 	width: 25%;
@@ -144,14 +143,16 @@ p {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.85);
     font-family: 'Roboto', sans-serif;
 	text-align: center;
 }
 
 h1 {
 	font-family: 'Roboto', sans-serif;
-	color: #388E3C;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
 	font-size: 4vw;
 	margin-top: 100px;
 	margin-bottom: 4%;
@@ -160,10 +161,12 @@ h1 {
 button {
 	font-family: 'Roboto', sans-serif;
 	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
 	font-size: 1.25vw;
 	margin: 0.5%;
 	border-radius: 5px;
-	background-color: #388E3C;
+	background-color: #6373FF;
 	width: 20%;
 	height: 3vw;
 	outline: none;
@@ -176,7 +179,7 @@ h1:hover {
 
 button:hover {
 	cursor: pointer;
-	background-color: #1B5E20;
+	background-color: #4653B5;
 }
 }
 
@@ -198,7 +201,7 @@ p:hover {
 	width: 100%;
 	height: 100%;
 	z-index: 999;
-	background-color: #424242;
+	background-color: #CCE5FF;
 }
 
 #loading:hover {

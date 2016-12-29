@@ -5,13 +5,15 @@ body, html {
     overflow: hidden;
 	width: 100%;
 	height: 100%;
-	background-color: #424242;
+	background-color: #CCE5FF;
 	text-align: center;
 }
 
 h1 {
 	font-family: 'Roboto', sans-serif;
-	color: #388E3C;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
 	font-size: 4vw;
 	margin-top: 1%;
 	margin-bottom: 3%;
@@ -33,7 +35,9 @@ th {
 	width: 11vw;
 	text-align: left;
 	font-family: 'Roboto', sans-serif;
-	color: #CFD8DC;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
 	font-size: 1.5vw;
 	padding: 5px;
 }
@@ -45,7 +49,9 @@ th {
 
 #turn_time_value, #theme_value, #difficulty_value, #first_player_value {
 	font-size: 1vw;
-	color: #388E3C;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
 }
 
 #logo {
@@ -66,10 +72,12 @@ th {
 .button {
 	font-family: 'Roboto', sans-serif;
 	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
 	font-size: 1.25vw;
 	margin-bottom: 0.5%;
 	border-radius: 5px;
-	background-color: #388E3C;
+	background-color: #6373FF;
 	width: 20%;
 	height: 3vw;
 	outline: none;
@@ -78,7 +86,7 @@ th {
 
 .button:hover {
 	cursor: pointer;
-	background-color: #1B5E20;
+	background-color: #4653B5;
 }
 
 
@@ -89,21 +97,21 @@ input[type=range] {
 
 input[type=range]::-webkit-slider-thumb:hover {
 	cursor: pointer;
-	background: #1B5E20;
+	background: #4653B5;
 }
 input[type=range]::-moz-range-thumb:hover {
 	cursor: pointer;
-	background: #1B5E20;
+	background: #4653B5;
 }
 input[type=range]::-ms-thumb:hover {
 	cursor: pointer;
-	background: #1B5E20;
+	background: #4653B5;
 }
 
 input[type=range]::-webkit-slider-runnable-track {
     width: 9vw;
     height: 5px;
-    background: #CFD8DC;
+    background: white;
     border: none;
     border-radius: 3px;
 }
@@ -113,7 +121,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: #388E3C;
+    background: #6373FF;
     margin-top: -4px;
 }
 input[type=range]:focus {
@@ -123,7 +131,7 @@ input[type=range]:focus {
 input[type=range]::-moz-range-track {
     width: 9vw;
     height: 5px;
-    background: #CFD8DC;
+    background: white;
     border: none;
     border-radius: 3px;
 }
@@ -132,7 +140,7 @@ input[type=range]::-moz-range-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: #388E3C;
+    background: #6373FF;
 }
 
 input[type=range]:-moz-focusring{
@@ -161,13 +169,25 @@ input[type=range]::-ms-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: #388E3C;
+    background: #6373FF;
 }
 input[type=range]:focus::-ms-fill-lower {
     background: #888;
 }
 input[type=range]:focus::-ms-fill-upper {
     background: #ccc;
+}
+
+h1:hover {
+	cursor: default;
+}
+
+p:hover {
+	cursor: default;
+}
+
+th:hover {
+	cursor: default;
 }
 
 .unselectable {

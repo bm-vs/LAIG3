@@ -5,6 +5,7 @@ body, html {
     overflow: hidden;
 	width: 100%;
 	height: 100%;
+	background-color: #CCE5FF;
 }
 
 canvas {
@@ -14,19 +15,9 @@ canvas {
 
 p {
 	font-family: 'Roboto', sans-serif;
-	color: #CFD8DC;
-}
-
-#loading {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	z-index: 999;
-	background-color: #424242;
-}
-
-#loading:hover {
-	cursor: wait;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
 }
 
 #game {
@@ -64,7 +55,7 @@ p {
 }
 
 .interface-section {
-	background-color: #424242;
+	background-color: #CCE5FF;
 	display: inline-block;
 }
 
@@ -110,9 +101,6 @@ p {
 	border-radius: 3px;
 }
 
-#player-black {
-	background-color: #388E3C;
-}
 
 #player-white-score, #player-black-score {
 	display: inline;
@@ -152,7 +140,9 @@ p {
 
 h1 {
 	font-family: 'Roboto', sans-serif;
-	color: #388E3C;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
 	font-size: 4vw;
 	margin-top: 100px;
 	margin-bottom: 4%;
@@ -161,10 +151,12 @@ h1 {
 button {
 	font-family: 'Roboto', sans-serif;
 	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	font-weight: bold;
 	font-size: 1.25vw;
 	margin: 0.5%;
 	border-radius: 5px;
-	background-color: #388E3C;
+	background-color: #6373FF;
 	width: 20%;
 	height: 3vw;
 	outline: none;
@@ -177,7 +169,7 @@ h1:hover {
 
 button:hover {
 	cursor: pointer;
-	background-color: #1B5E20;
+	background-color: #4653B5;
 }
 
 p:hover {
@@ -198,7 +190,7 @@ p:hover {
 	width: 100%;
 	height: 100%;
 	z-index: 999;
-	background-color: #424242;
+	background-color: #CCE5FF;
 }
 
 #loading:hover {

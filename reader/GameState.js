@@ -337,8 +337,8 @@ GameState.prototype.previousPlayer = function() {
 // Update game settings to new active player
 GameState.prototype.updateToNewPlayer = function() {
 	if (this.current_player == 1) {
-		document.getElementById('player-black').style.backgroundColor = '#388E3C';
-		document.getElementById('player-white').style.backgroundColor = '#424242';
+		document.getElementById('player-black').style.backgroundColor = '#6373FF';
+		document.getElementById('player-white').style.backgroundColor = '#CCE5FF';
 		
 		if (localStorage.player1 === "Computer") {
 			this.scene.setPickEnabled(false);
@@ -348,8 +348,8 @@ GameState.prototype.updateToNewPlayer = function() {
 		}
 	}
 	else if (this.current_player == 2) {
-		document.getElementById('player-white').style.backgroundColor = '#388E3C';
-		document.getElementById('player-black').style.backgroundColor = '#424242';
+		document.getElementById('player-white').style.backgroundColor = '#6373FF';
+		document.getElementById('player-black').style.backgroundColor = '#CCE5FF';
 		
 		if (localStorage.player2 === "Computer") {
 			this.scene.setPickEnabled(false);
@@ -455,9 +455,9 @@ GameState.prototype.update = function() {
 			}
 		
 			document.getElementById('turn-time-countdown').innerHTML = turn_seconds;
-			document.getElementById('turn-time-countdown').style.color = '#CFD8DC';
+			document.getElementById('turn-time-countdown').style.color = 'white';
 			if (turn_seconds < 10) {
-				document.getElementById('turn-time-countdown').style.color = '#C62828';
+				document.getElementById('turn-time-countdown').style.color = '#E53935';
 			}
 	}
 	else {

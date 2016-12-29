@@ -98,12 +98,12 @@ VideoState.prototype.nextMove = function() {
 		this.moves[this.current_move].startAnimation();
 		
 		if (this.current_player == 1) {
-			document.getElementById('player-black').style.backgroundColor = '#388E3C';
-			document.getElementById('player-white').style.backgroundColor = '#424242';
+			document.getElementById('player-black').style.backgroundColor = '#6373FF';
+			document.getElementById('player-white').style.backgroundColor = '#CCE5FF';
 		}
 		else if (this.current_player == 2) {
-			document.getElementById('player-white').style.backgroundColor = '#388E3C';
-			document.getElementById('player-black').style.backgroundColor = '#424242';
+			document.getElementById('player-white').style.backgroundColor = '#6373FF';
+			document.getElementById('player-black').style.backgroundColor = '#CCE5FF';
 		}
 		
 	}

@@ -16,24 +16,24 @@
 	<form action='javascript:setOptions()'>
 		<table>
 		<tr>
-			<th>Turn Time</th>
+			<th class='unselectable'>Turn Time</th>
 			<th><input type="range" id="turn_time" min="0" max="120" step="5" oninput="changeTurnTime()"></th>
-			<th id="turn_time_value"></th>
+			<th id="turn_time_value" class='unselectable'></th>
 		</tr>
 		<tr>
-			<th>First Player</th>
+			<th class='unselectable'>First Player</th>
 			<th><input type="range" id="first_player" min="1" max="2" step="1" oninput="changeFirstPlayer()"></th>
-			<th id="first_player_value"></th>
+			<th id="first_player_value" class='unselectable'></th>
 		</tr>
 		<tr>
-			<th>Difficulty</th>
+			<th class='unselectable'>Difficulty</th>
 			<th><input type="range" id="difficulty" min="1" max="3" step="1" oninput="changeDifficulty()"></th>
-			<th id="difficulty_value"></th>
+			<th id="difficulty_value" class='unselectable'></th>
 		</tr>
 		<tr>
-			<th>Theme</th>
+			<th class='unselectable'>Theme</th>
 			<th><input type="range" id="theme" min="1" max="4" step="1" oninput="changeTheme()"></th>
-			<th id="theme_value"></th>
+			<th id="theme_value" class='unselectable'></th>
 		</tr>
 		</table>
 		
