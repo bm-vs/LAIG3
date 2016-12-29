@@ -441,19 +441,28 @@ GameState.prototype.update = function() {
 	formatted_time += seconds;
 	document.getElementById('game-timer').innerHTML = formatted_time;
 	
-	// - Turn time
-	var turn_seconds = Math.floor((curr_time-this.turn_start_time)/1000);
-	if (turn_seconds >= localStorage.turn_time) {
-		turn_seconds = 0;
-		this.endGameEarly();
+	// - Turn time (only for human players)
+	if ((localStorage.player1 === "Player" && this.current_player == 1) ||
+		(localStorage.player2 === "Player" && this.current_player == 2)) {
+			console.log(localStorage.player1, localStorage.player2, this.current_player);
+		
+			var turn_seconds = Math.floor((curr_time-this.turn_start_time)/1000);
+			if (turn_seconds >= localStorage.turn_time) {
+				turn_seconds = 0;
+				this.endGameEarly();
+			}
+			else {
+				turn_seconds = localStorage.turn_time - turn_seconds;
+			}
+		
+			document.getElementById('turn-time-countdown').innerHTML = turn_seconds;
+			document.getElementById('turn-time-countdown').style.color = '#CFD8DC';
+			if (turn_seconds < 10) {
+				document.getElementById('turn-time-countdown').style.color = '#C62828';
+			}
 	}
 	else {
-		turn_seconds = localStorage.turn_time - turn_seconds;
-	}
-	document.getElementById('turn-time-countdown').innerHTML = turn_seconds;
-	document.getElementById('turn-time-countdown').style.color = '#CFD8DC';
-	if (turn_seconds < 10) {
-		document.getElementById('turn-time-countdown').style.color = '#C62828';
+		document.getElementById('turn-time-countdown').innerHTML = '';
 	}
 		
 	// Do animations
