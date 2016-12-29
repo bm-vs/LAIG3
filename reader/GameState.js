@@ -337,6 +337,8 @@ GameState.prototype.previousPlayer = function() {
 // Update game settings to new active player
 GameState.prototype.updateToNewPlayer = function() {
 	if (this.current_player == 1) {
+		document.getElementById('player-black-score').style.color = 'white';
+		document.getElementById('player-white-score').style.color = 'rgba(0,0,0,0.7)';
 		document.getElementById('player-black').style.backgroundColor = '#6373FF';
 		document.getElementById('player-white').style.backgroundColor = '#CCE5FF';
 		
@@ -348,6 +350,8 @@ GameState.prototype.updateToNewPlayer = function() {
 		}
 	}
 	else if (this.current_player == 2) {
+		document.getElementById('player-white-score').style.color = 'white';
+		document.getElementById('player-black-score').style.color = 'rgba(0,0,0,0.7)';
 		document.getElementById('player-white').style.backgroundColor = '#6373FF';
 		document.getElementById('player-black').style.backgroundColor = '#CCE5FF';
 		
@@ -402,7 +406,12 @@ GameState.prototype.updateNumberOfPieces = function() {
 			this.ended = true;
 		}
 		
-		document.getElementById('winner').innerHTML = "Player " + this.winner + " wins!";
+		if (this.winner == 1) {
+			document.getElementById('winner').innerHTML = "Black wins!";
+		}
+		else if (this.winner == 2) {
+			document.getElementById('winner').innerHTML = "White wins!";
+		}
 		
 		// Save moves to file
 		this.saveGameToFile();
@@ -416,7 +425,12 @@ GameState.prototype.endGameEarly = function() {
 	document.getElementById('modal').style.display = "block";
 	this.ended = true;
 	this.winner = (this.current_player%2)+1;
-	document.getElementById('winner').innerHTML = "Player " + this.winner + " wins!";
+	if (this.winner == 1) {
+		document.getElementById('winner').innerHTML = "Black wins!";
+	}
+	else if (this.winner == 2) {
+		document.getElementById('winner').innerHTML = "White wins!";
+	}
 	
 	// Save moves to file
 	this.saveGameToFile();

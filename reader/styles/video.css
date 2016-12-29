@@ -15,9 +15,7 @@ canvas {
 
 p {
 	font-family: 'Roboto', sans-serif;
-	color: white;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-	font-weight: bold;
+	color: rgba(0,0,0,0.7);
 }
 
 #game {
@@ -141,8 +139,6 @@ p {
 h1 {
 	font-family: 'Roboto', sans-serif;
 	color: white;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-	font-weight: bold;
 	font-size: 4vw;
 	margin-top: 100px;
 	margin-bottom: 4%;
@@ -151,8 +147,6 @@ h1 {
 button {
 	font-family: 'Roboto', sans-serif;
 	color: white;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-	font-weight: bold;
 	font-size: 1.25vw;
 	margin: 0.5%;
 	border-radius: 5px;

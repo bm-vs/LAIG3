@@ -19,9 +19,7 @@ canvas:hover {
 
 p {
 	font-family: 'Roboto', sans-serif;
-	color: white;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-	font-weight: bold;
+	color: rgba(0,0,0,0.7);
 }
 
 
@@ -55,6 +53,10 @@ p {
 	text-align: center;
 }
 
+#game_info:hover {
+	cursor: default;
+}
+
 #undo {
 	width: 20%;
 	height: 100%;
@@ -83,6 +85,10 @@ p {
 	display: inline-block;
 	font-size: 1vw;
 	vertical-align: middle;
+}
+
+#game-timer:hover {
+	cursor: default;
 }
 
 #undo-button {
@@ -125,6 +131,7 @@ p {
 	font-size: 2.5vw;
 	text-align: center;
 	vertical-align: middle;
+	font-weight: bold;
 }
 
 #white-piece, #black-piece {
@@ -151,8 +158,6 @@ p {
 h1 {
 	font-family: 'Roboto', sans-serif;
 	color: white;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-	font-weight: bold;
 	font-size: 4vw;
 	margin-top: 100px;
 	margin-bottom: 4%;
@@ -161,8 +166,6 @@ h1 {
 button {
 	font-family: 'Roboto', sans-serif;
 	color: white;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-	font-weight: bold;
 	font-size: 1.25vw;
 	margin: 0.5%;
 	border-radius: 5px;
