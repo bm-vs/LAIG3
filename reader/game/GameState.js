@@ -469,7 +469,7 @@ GameState.prototype.update = function() {
 			}
 		
 			document.getElementById('turn-time-countdown').innerHTML = turn_seconds;
-			document.getElementById('turn-time-countdown').style.color = 'white';
+			document.getElementById('turn-time-countdown').style.color = 'rgba(0,0,0,0.7)';
 			if (turn_seconds < 10) {
 				document.getElementById('turn-time-countdown').style.color = '#E53935';
 			}

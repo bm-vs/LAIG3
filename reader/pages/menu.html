@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Cage</title>
+	<link rel="icon" href="../resources/logo.png" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../styles/menu.css" />
+</head>
+<body>
+	<script>
+		localStorage.undo = false;
+		localStorage.playstop = "play";
+		localStorage.player1 = "Player";
+		localStorage.player2 = "Player";
+		if (localStorage.turn_time == null || localStorage.first_player == null ||
+			localStorage.difficulty == null || localStorage.theme == null) {
+				localStorage.turn_time = 60;
+				localStorage.first_player = 1;
+				localStorage.difficulty = 1;
+				localStorage.theme = 1;
+		}
+	</script>
+
+	<a href="https://github.com/BSantos22/LAIG3" target="_blank"><img src="../resources/github.png" id="github-img"></a>
+	<img id='logo' src='../resources/logo.png'/>
+	
+	<h1 id='title' class='unselectable'>Cage</h1>
+	
+	<ul>
+	<li><button id="player-vs-player" class="button">Player vs Player</button></li>
+	<li><button id="player-vs-computer" class="button">Player vs Computer</button></li>
+	<li><button id="computer-vs-computer" class="button">Computer vs Computer</button></li>
+	<li><button id="watch-replays" class="button">Watch replays</button></li>
+	<li><button id="options" class="button">Options</button></li>
+	<li><button id="help" class="button">Help</button></li>
+	</ul>
+	
+	<script type="text/javascript">
+		document.getElementById("player-vs-player").onclick = function () {
+			localStorage.player1 = "Player";
+			localStorage.player2 = "Player";
+			location.href = "game.html";
+		};
+		document.getElementById("player-vs-computer").onclick = function () {
+			localStorage.player1 = "Player";
+			localStorage.player2 = "Computer";
+			location.href = "game.html";
+		};
+		document.getElementById("computer-vs-computer").onclick = function () {
+			localStorage.player1 = "Computer";
+			localStorage.player2 = "Computer";
+			location.href = "game.html";
+		};
+		document.getElementById("watch-replays").onclick = function () {
+			document.getElementById('modal').style.display = "block";
+		};
+		document.getElementById("options").onclick = function () {
+			location.href = "options.html";
+		};
+		document.getElementById("help").onclick = function () {
+			window.open('http://www.marksteeregames.com/Cage_rules.html','_blank');
+		};
+	</script>
+	
+	<section id="modal" class="modal">
+		<h1 id="choose">Choose file</h1>
+		<form id="form-video" action="javascript:watchVideo()" autocomplete="off">
+			<input type="text" id="input_file_name" class="text-input" placeholder="File name"><br>
+			<input class="button" type="submit" value="Submit">
+		</form>
+		
+		<button id="back" class="button">Back</button>
+	</section>
+	
+	<script type="text/javascript">
+		document.getElementById("back").onclick = function () {
+			location.href = "menu.html";
+		};
+	
+		function watchVideo() {
+			localStorage.video_name = document.getElementById('input_file_name').value;
+			location.href = "video.html";
+		}
+	</script>
+	
+</body>
+</html>

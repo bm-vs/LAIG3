@@ -1,7 +1,7 @@
 function VideoLoader(filename, scene) {
 	this.scene = scene;
 	this.reader = new CGFXMLreader();
-	this.reader.open('videos/'+filename, this);
+	this.reader.open('../videos/'+filename, this);
 }
 
 VideoLoader.prototype.onXMLReady = function() {
@@ -18,7 +18,7 @@ VideoLoader.prototype.onXMLReady = function() {
 
 VideoLoader.prototype.onXMLError = function(message) {
 	this.loadedOk=false;
-	location.href = "index.html";
+	location.href = "../pages/menu.html";
 }
 
 VideoLoader.prototype.parseDSX = function(rootElement) {

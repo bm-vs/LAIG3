@@ -7,11 +7,11 @@ function Board(scene) {
 	this.height = 0.075;
 	var color1 = [1, 1, 1]; // colors
 	var color2 = [0.8, 0.4, 0.4];
-	this.shader = new CGFshader(scene.gl, "shaders/board.vert", "shaders/board.frag"); // shader
+	this.shader = new CGFshader(scene.gl, "../shaders/board.vert", "../shaders/board.frag"); // shader
 	this.shader.setUniformsValues({du:du, dv:dv, color1:color1, color2:color2});
 
 	this.material = new CGFappearance(this.scene);
-	this.material.loadTexture('resources/wood.jpg');
+	this.material.loadTexture('../resources/wood.jpg');
 	
 	// Board primitives
 	this.top = new Plane(scene, 1.0, 1.0, du, dv);

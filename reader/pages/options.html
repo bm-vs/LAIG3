@@ -3,13 +3,13 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Cage</title>
-	<link rel="icon" href="resources/logo.png" />
+	<link rel="icon" href="../resources/logo.png" />
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="styles/options.css" />
+	<link rel="stylesheet" type="text/css" href="../styles/options.css" />
 </head>
 <body>
-	<a href="https://github.com/BSantos22/LAIG3" target="_blank"><img src="resources/github.png" id="github-img"></a>
-	<img id='logo' src='resources/logo.png'/>
+	<a href="https://github.com/BSantos22/LAIG3" target="_blank"><img src="../resources/github.png" id="github-img"></a>
+	<img id='logo' src='../resources/logo.png'/>
 	
 	<h1 id='title' class='unselectable'>Options</h1>
 	
@@ -37,7 +37,7 @@
 		</tr>
 		</table>
 		
-		<input class="button" type="submit" id="submit" value="Save and Back">
+		<input class="button" type="submit" id="submit" value="Save">
 	</form>
 	
 	<script>
@@ -55,7 +55,7 @@
 			localStorage.difficulty = document.getElementById('difficulty').value;
 			localStorage.theme = document.getElementById('theme').value;
 			localStorage.turn_time = document.getElementById('turn_time').value;
-			location.href = "index.html";
+			location.href = "menu.html";
 		}
 	
 		function getTurnTime(val) {

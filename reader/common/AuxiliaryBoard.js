@@ -5,7 +5,7 @@ function AuxiliaryBoard(scene, player) {
 	this.box = new Box(this.scene);
 	
 	this.material = new CGFappearance(this.scene);
-	this.material.loadTexture('resources/wood.jpg');
+	this.material.loadTexture('../resources/wood.jpg');
 	
 	this.current_y = 0;
 	this.change = 0.188;
