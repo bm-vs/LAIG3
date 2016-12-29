@@ -74,7 +74,9 @@ Piece.prototype.display = function() {
 		
 		
 		this.scene.translate(this.x, this.y, 0.4+this.z);
-		this.scene.rotate(this.ang, 1, 0, 0);
+		if (this.type == 1) {
+			this.scene.rotate(this.ang, 1, 0, 0);
+		}
 		this.scene.registerForPick(this.id, this);
 		this.piece.display();
 	this.scene.popMatrix();
@@ -82,7 +84,6 @@ Piece.prototype.display = function() {
 	if (this.type == 2) {
 		this.scene.pushMatrix();
 			this.scene.translate(this.x, this.y, 0.4+this.z);
-			this.scene.rotate(this.ang, 1, 0, 0);
 			this.scene.translate(0, 0, 0.16);
 			this.scene.registerForPick(this.id, this);
 			this.outer.display();
@@ -90,7 +91,6 @@ Piece.prototype.display = function() {
 		
 		this.scene.pushMatrix();
 			this.scene.translate(this.x, this.y, 0.4+this.z);
-			this.scene.rotate(this.ang, 1, 0, 0);
 			this.scene.translate(0, 0, 0.14);
 			this.scene.registerForPick(this.id, this);
 			this.inner.display();

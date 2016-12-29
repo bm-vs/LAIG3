@@ -85,12 +85,12 @@ function AnimationRemove(scene, move, piece, from_x, from_y) {
 	
 	// Change auxiliary board current piece position
 	if (this.piece.player == 1) {
-		this.to_x = 11.5;
+		this.to_x = this.move.game_state.auxiliary_board1.current_x;
 		this.to_y = this.move.game_state.auxiliary_board1.current_y;
 		this.move.game_state.auxiliary_board1.addPiece();
 	}
 	else if (this.piece.player == 2) {
-		this.to_x = -2.5;
+		this.to_x = this.move.game_state.auxiliary_board2.current_x;
 		this.to_y = this.move.game_state.auxiliary_board2.current_y;
 		this.move.game_state.auxiliary_board2.addPiece();
 	}

@@ -111,6 +111,9 @@ GameMove.prototype.finishRemoval = function(piece, to_x, to_y) {
 	this.animation = null;
 	piece.x = to_x;
 	piece.y = to_y;
+	if (localStorage.theme == 2) {
+		piece.z = -0.1;
+	}
 	
 	// Remove jumped piece
 	if (this.animation_jumped != null) {

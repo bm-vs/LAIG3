@@ -1,6 +1,7 @@
 function Board(scene) {
 	this.scene = scene;
-
+	this.type = localStorage.theme;
+	
 	// Board settings
 	var du = 10; // number of divisions
 	var dv = 10;
@@ -16,7 +17,12 @@ function Board(scene) {
 	// Board primitives
 	this.top = new Plane(scene, 1.0, 1.0, du, dv);
 	this.side = new Plane(scene, 1.0, this.height, du, 1);
-
+	if (this.type == 2) {
+		this.shader2 = new CGFshader(scene.gl, "../shaders/board.vert", "../shaders/extension.frag"); // shader
+		this.shader2.setUniformsValues({du:du, dv:dv, color1:color1});
+		this.extension = new Cylinder(scene, 0.95, 0.95, 128, 8, this.height+0.005);
+	}
+	
 	// Tiles
 	this.tiles = [];
 	var id = 0;
@@ -94,6 +100,15 @@ Board.prototype.display = function() {
 		this.scene.rotate(Math.PI/2, 0, 0, 1);
 		this.side.display();
 	this.scene.popMatrix();
+	
+	if (this.type == 2) {
+		this.scene.pushMatrix();
+			this.scene.setActiveShader(this.shader2);
+			this.scene.translate(0, 0, -this.height/2-0.009);
+			this.extension.display();
+			this.scene.setActiveShader(this.scene.defaultShader);
+		this.scene.popMatrix();
+	}
 
 	for (var tiles = 0; tiles < this.tiles.length; tiles++) {
 		this.scene.pushMatrix();
