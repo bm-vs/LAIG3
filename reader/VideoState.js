@@ -96,6 +96,16 @@ VideoState.prototype.nextMove = function() {
 		this.moves[this.current_move].animated = true;
 		this.current_player = this.piece_positions[this.moves[this.current_move].from_y][this.moves[this.current_move].from_x];
 		this.moves[this.current_move].startAnimation();
+		
+		if (this.current_player == 1) {
+			document.getElementById('player-black').style.backgroundColor = '#388E3C';
+			document.getElementById('player-white').style.backgroundColor = '#424242';
+		}
+		else if (this.current_player == 2) {
+			document.getElementById('player-white').style.backgroundColor = '#388E3C';
+			document.getElementById('player-black').style.backgroundColor = '#424242';
+		}
+		
 	}
 }
 

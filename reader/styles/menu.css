@@ -47,11 +47,20 @@ h1 {
 	border: none;
 }
 
+.button:hover {
+	cursor: pointer;
+	background-color: #1B5E20;
+}
+
 #github-img {
 	position: absolute;
 	top: 1%;
 	right: 1%;
 	width: 1.5%;
+}
+
+h1:hover {
+	cursor: default;
 }
 
 .modal {
