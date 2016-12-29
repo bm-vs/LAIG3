@@ -66,6 +66,7 @@ Piece.prototype.display = function() {
 		else {
 			this.appearance.apply();
 		}
+		//this.scene.scale(1, 1, 0.75);
 		this.scene.translate(this.x, this.y, 0.4+this.z);
 		this.scene.rotate(this.ang, 1, 0, 0);
 		this.scene.registerForPick(this.id, this);

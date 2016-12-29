@@ -8,7 +8,7 @@ function AuxiliaryBoard(scene, player) {
 	this.material.loadTexture('resources/wood.jpg');
 	
 	this.current_y = 0;
-	this.change = 0.2;
+	this.change = 0.188;
 }
 
 AuxiliaryBoard.prototype.display = function() {

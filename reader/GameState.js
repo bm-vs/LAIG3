@@ -443,9 +443,7 @@ GameState.prototype.update = function() {
 	
 	// - Turn time (only for human players)
 	if ((localStorage.player1 === "Player" && this.current_player == 1) ||
-		(localStorage.player2 === "Player" && this.current_player == 2)) {
-			console.log(localStorage.player1, localStorage.player2, this.current_player);
-		
+		(localStorage.player2 === "Player" && this.current_player == 2)) {		
 			var turn_seconds = Math.floor((curr_time-this.turn_start_time)/1000);
 			if (turn_seconds >= localStorage.turn_time) {
 				turn_seconds = 0;
