@@ -439,6 +439,8 @@ GameState.prototype.endGameEarly = function() {
 
 GameState.prototype.update = function() {
 	// Update interface
+	this.board.update();
+	
 	// - Game time
 	var curr_time = new Date();
 	var diff = Math.floor((curr_time-this.start_time)/1000);

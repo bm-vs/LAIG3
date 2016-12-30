@@ -69,6 +69,8 @@ VideoState.prototype.display = function() {
 }
 
 VideoState.prototype.update = function() {
+	this.board.update();
+
 	// Do animations
 	this.animated = false;
 	

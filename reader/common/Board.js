@@ -22,6 +22,16 @@ function Board(scene) {
 		this.shader2.setUniformsValues({du:du, dv:dv, color1:color1});
 		this.extension = new Cylinder(scene, 0.95, 0.95, 128, 8, this.height+0.005);
 	}
+	if (this.type == 3) {
+		this.snow_texture = new CGFappearance(this.scene);
+		this.snow_texture.setAmbient(1.0, 1.0, 1.0, 1.0);
+		this.snow_texture.setDiffuse(1.0, 1.0, 1.0, 1.0);
+		this.snow_texture.loadTexture('../resources/snow.jpg');
+		this.snow = new Patch(scene);
+		
+		this.tree = new Tree(scene);
+		this.snow_man = new SnowMan(scene);
+	}
 	
 	// Tiles
 	this.tiles = [];
@@ -109,11 +119,39 @@ Board.prototype.display = function() {
 			this.scene.setActiveShader(this.scene.defaultShader);
 		this.scene.popMatrix();
 	}
+	
+	if (this.type == 3) {
+		this.scene.pushMatrix();
+			this.scene.translate(-0.6, 0.65, -0.1);
+			this.scene.scale(0.05, 0.05, 0.05);
+			this.tree.display();
+		this.scene.popMatrix();
+	
+		this.scene.pushMatrix();
+			this.scene.translate(0.6, 0.65, 0.075);
+			this.scene.rotate(-Math.PI/8, 0, 0, 1);
+			this.scene.scale(0.05, 0.05, 0.05);
+			this.snow_man.display();
+		this.scene.popMatrix();
+	
+		this.scene.pushMatrix();
+			this.snow_texture.apply();
+			this.scene.translate(-1, -1, 0);
+			this.scene.scale(4, 4, 0.8);
+			this.snow.display();
+		this.scene.popMatrix();
+	}
 
 	for (var tiles = 0; tiles < this.tiles.length; tiles++) {
 		this.scene.pushMatrix();
 			this.scene.translate(-0.45, -0.45, this.height/2);
 			this.tiles[tiles].display();
 		this.scene.popMatrix();
+	}
+}
+
+Board.prototype.update = function() {
+	if (this.type == 3) {
+		this.tree.update();
 	}
 }

@@ -74,7 +74,7 @@ Piece.prototype.display = function() {
 		
 		
 		this.scene.translate(this.x, this.y, 0.4+this.z);
-		if (this.type == 1) {
+		if (this.type == 1 || this.type == 3) {
 			this.scene.rotate(this.ang, 1, 0, 0);
 		}
 		this.scene.registerForPick(this.id, this);

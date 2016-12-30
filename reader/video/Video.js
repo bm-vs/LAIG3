@@ -29,6 +29,10 @@ serialInclude([
 	'../primitives/Quad.js',
 	'../primitives/Cube.js',
 	'../primitives/Torus.js',
+	'../primitives/Patch.js',
+	'../primitives/Sphere.js',
+	'../primitives/SnowMan.js',
+	'../primitives/Tree.js',
 	'../common/Utilities.js',
 
 main=function()

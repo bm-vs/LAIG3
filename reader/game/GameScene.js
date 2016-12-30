@@ -36,7 +36,7 @@ GameScene.prototype.initCameras = function () {
 	this.cameras[4] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(-30, 30, 0), vec3.fromValues(0, 0, 0));
 	this.cameras[5] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 30, 30), vec3.fromValues(0, 0, 0));
 	this.camera = this.cameras[0];
-	//this.interface.setActiveCamera(this.camera);
+	this.interface.setActiveCamera(this.camera);
 
 	this.active_camera = 0;
 	this.changing_camera = false;

@@ -3,7 +3,7 @@ function AuxiliaryBoard(scene, player) {
 	this.player = player;
 	this.type = localStorage.theme;
 
-	if (this.type == 1) {
+	if (this.type == 1 || this.type == 3) {
 		this.box = new Box(this.scene);
 		this.material = new CGFappearance(this.scene);
 		this.material.loadTexture('../resources/wood.jpg');
@@ -38,7 +38,7 @@ function AuxiliaryBoard(scene, player) {
 }
 
 AuxiliaryBoard.prototype.display = function() {
-	if (this.type == 1) {
+	if (this.type == 1 || this.type == 3) {
 		this.scene.pushMatrix();
 			this.material.apply();
 			this.box.display();
@@ -47,7 +47,7 @@ AuxiliaryBoard.prototype.display = function() {
 }
 
 AuxiliaryBoard.prototype.addPiece = function() {
-	if (this.type == 1) {
+	if (this.type == 1 || this.type == 3) {
 		this.current_y += this.change;
 	}
 	else if (this.type == 2) {
@@ -63,7 +63,7 @@ AuxiliaryBoard.prototype.addPiece = function() {
 }
 
 AuxiliaryBoard.prototype.removePiece = function() {
-	if (this.type == 1) {
+	if (this.type == 1 || this.type == 3) {
 		this.current_y -= this.change;
 	}
 	else if (this.type == 2) {
