@@ -105,8 +105,8 @@ print_header_line(_).
 
 % Require your Prolog Files here
 
-:- ensure_loaded('src/rules.pl').
-:- ensure_loaded('src/utilities.pl').
+:- ensure_loaded('rules.pl').
+:- ensure_loaded('utilities.pl').
 
 % RequestString processing
 parse_input(Request, Response) :-

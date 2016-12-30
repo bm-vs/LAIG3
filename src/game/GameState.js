@@ -178,9 +178,19 @@ GameState.prototype.computerPickMove = function() {
 	}
 	// Choose random play
 	else {
-		var available_moves = this.jump_moves.concat(this.adjoin_moves, this.center_moves);
-		var move_index = Math.floor(Math.random() * available_moves.length);
-		var tile = this.board.getTile(available_moves[move_index]);
+		var tile;
+		// Completely random
+		if (localStorage.difficulty == 1 || this.jump_moves.length == 0) {
+			var available_moves = this.jump_moves.concat(this.adjoin_moves, this.center_moves);
+			var move_index = Math.floor(Math.random() * available_moves.length);
+			tile = this.board.getTile(available_moves[move_index]);
+		}
+		// Jump move if available if difficulty == 2 and there are jump moves available
+		else {
+			var move_index = Math.floor(Math.random() * this.jump_moves.length);
+			tile = this.board.getTile(this.jump_moves[move_index]);
+		}
+		
 		this.processPick(tile);
 	}
 }
