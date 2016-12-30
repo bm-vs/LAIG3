@@ -81,6 +81,9 @@ VideoScene.prototype.display = function() {
 };
 
 VideoScene.prototype.startPause = function() {
+	document.querySelector('#play-button').classList.toggle("transparent");
+	document.querySelector('#stop-button').classList.toggle("transparent");
+
 	if (localStorage.playstop === "play") {
 		localStorage.playstop = "stop";
 	}
